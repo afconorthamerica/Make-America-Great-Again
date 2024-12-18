@@ -1,0 +1,34 @@
+[
+    {
+        "Last Name/Business Name": "ABNEY",
+        "First Initial": "A",
+        "MI": "A",
+        "City": "DETROIT",
+        "State": "MI",
+        "Credit Union Name": "CRAFTSMAN"
+    },
+    {
+        "Last Name/Business Name": "ADAMS",
+        "First Initial": "R",
+        "MI": "W",
+        "City": "DETROIT",
+        "State": "MI",
+        "Credit Union Name": "CRAFTSMAN"
+    },
+    {
+        "Last Name/Business Name": "AFRICAN/LATINO YOUTH SUM",
+        "First Initial": null,
+        "MI": null,
+        "City": null,
+        "State": null,
+        "Credit Union Name": "WATTS UNITED"
+    },
+    {
+        "Last Name/Business Name": "AG AUTO BODY INC",
+        "First Initial": null,
+        "MI": null,
+        "City": "EUCLID",
+        "State": "OH",
+        "Credit Union Name": "TAUPA LITHUANIAN"
+    }
+]
