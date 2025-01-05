@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Consolidated Page | CFTC & Fraudulent Crypto Asset Recovery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+
+  <!-- html2canvas & jsPDF (for PDF export) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BXa6C9BEPpBzRANw4Z+cZJ9Ekf9cjTXmKvW7GOW50g6lm/XM7EqHf7sdI1ZtFKO2QY/6k1MzVVAN9PB+T7raYg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha512-AN5BHV1LTShU3LG7uTe77gVDijH7UCfA0x/GtjXkaTgOF7nvfJYu9y8bhApP9Er5cWfUPHcMHSEbhS8A2C7k4g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+  <!-- DataTables Buttons JS -->
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+  <!-- DataTables Responsive JS -->
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+  <style>
+    /***********************************************************
+     *                [1] 全局/基础样式
+     ***********************************************************/
+    :root {
+      /* Primary Colors */
+      --deep-blue: #003366;       /* Dark Blue */
+      --bright-blue: #0056b3;     /* Bright Blue */
+      --background-color: #f4f6f8; /* Light Grayish Background */
+      --text-color: #333333;      /* Primary Text Color */
+      --muted-text: #4a4a4a;      /* Secondary Text Color */
+      --highlight-bg: rgba(0, 86, 179, 0.1); /* Bright Blue Background */
+      --border-color: #ccc;       /* Border Color */
+      --transition-speed: 0.3s;   /* Transition Speed */
+      --btn-border-radius: 4px;   /* Button Border Radius */
+
+      /* USWDS-like Colors for the second block */
+      --usa-blue: #0B5394;            
+      --usa-blue-dark: #005EA2;       
+      --usa-gray-10: #F1F1F1;         
+      --usa-gray-50: #737373;        
+      --usa-gray-70: #262626;         
+      --usa-white: #FFFFFF;           
+      --usa-border-gray: #C6C6C6;     
+
+      /* Additional Vars */
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      --active-scale: 0.95;       
+      --active-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* RESET */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-family);
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* A generic container to keep everything centered */
+    .main-container {
+      max-width: 1200px;
+      margin: 5px auto;
+      padding: 5px;
+      width: 100%;
+    }
+
+    /***********************************************************
+     *                [2] Hero Section (CFTC)
+     ***********************************************************/
+    section.hero {
+      background-color: var(--deep-blue);
+      color: #FFFFFF;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+      position: relative; /* For positioning the "official resource" text */
+    }
+    .hero-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-1rap: nowrap;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .hero-title img {
+      width: 80px;
+      height: auto;
+      object-fit: contain;
+    }
+    section.hero h1.title {
+      font-size: 1.25rem;
+      margin: 0;
+      flex: 1; 
+      text-align: left;
+      max-width: 600px;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; 
+    }
+    section.hero p {
+      margin-top: 15px; 
+      font-size: 0.95rem; 
+      line-height: 1.5;
+    }
+    section.hero p a {
+      color: var(--bright-blue);
+      text-decoration: underline;
+    }
+    section.hero p a:hover,
+    section.hero p a:focus {
+      color: #FFFFFF;
+      background-color: var(--bright-blue);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .official-resource {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      font-size: 1rem;
+      color: #FFFFFF;
+    }
+
+    /***********************************************************
+     *                [3] Claim Process (CFTC)
+     ***********************************************************/
+    section.claim-process {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      background-color: #ffffff;
+      color: var(--deep-blue);
+      padding: 5px;
+      border-radius: 8px;
+      margin: 5px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+      gap: 5px;
+      border-top: 6px solid var(--bright-blue);
+    }
+    .step {
+      text-align: left;
+      flex: 1 1 22%;
+      min-width: 200px;
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid var(--border-color);
+    }
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 80%;
+      margin-bottom: 10px;
+      justify-content: space-between;
+    }
+    .icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--deep-blue);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #FFFFFF;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .step-header h2 {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: bold;
+      color: var(--deep-blue);
+      flex-grow: 1;
+      text-align: left;
+    }
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: var(--deep-blue);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+    }
+    .toggle-btn:focus {
+      outline: 2px solid var(--bright-blue);
+      outline-offset: 2px;
+    }
+    .step-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-speed) ease;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      line-height: 1.4;
+      color: #555555;
+    }
+    .step.active .step-content {
+      max-height: 500px; 
+    }
+
+    /***********************************************************
+     *                [4] Carousel Section
+     ***********************************************************/
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      background-color: #ffffff;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .carousel-item {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      padding: 15px;
+      display: none;
+    }
+    .carousel-item.active {
+      opacity: 1;
+      position: relative;
+      display: block;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--deep-blue);
+      margin-bottom: 20px;
+      border-left: 5px solid var(--bright-blue);
+      padding-left: 15px;
+      text-transform: capitalize;
+      transition: font-size var(--transition-speed);
+    }
+    .section-title img {
+      margin-right: 12px;
+      width: 40px;
+      height: 40px;
+    }
+    .section-description {
+      font-size: 16px;
+      color: var(--muted-text);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .resource-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .resource-item-container {
+      background-color: var(--highlight-bg);
+      padding: 12px;
+      border-radius: 5px;
+      width: 48%;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+    .resource-item-container:hover,
+    .resource-item-container:focus-within {
+      background-color: var(--bright-blue);
+      transform: scale(1.03);
+    }
+    .resource-item {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      color: var(--deep-blue);
+      text-decoration: none;
+    }
+    .resource-item i {
+      margin-right: 10px;
+      color: white;
+    }
+    .resource-item-container:hover .resource-item,
+    .resource-item-container:focus-within .resource-item {
+      color: white;
+    }
+    /* Whistleblower Program link */
+    .carousel-item .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      border-radius: var(--btn-border-radius);
+      background-color: var(--bright-blue);
+      color: #fff;
+      text-decoration: none;
+      transition: background-color var(--transition-speed);
+    }
+    .carousel-item .btn:hover,
+    .carousel-item .btn:focus {
+      background-color: #004994;
+    }
+
+    /***********************************************************
+     *                [5] Table Section (Unclaimed Deposits)
+     ***********************************************************/
+    section.table-section {
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 10px 0;
+      border-top: 6px solid var(--bright-blue);
+    }
+    section.table-section h2 {
+      margin-bottom: 5px;
+      color: var(--deep-blue);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 1.75rem;
+    }
+    .search-container {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .search-container input {
+      padding: 10px 14px;
+      width: 300px;
+      max-width: 100%;
+      border: 1px solid var(--border-color);
+      border-radius: var(--btn-border-radius);
+      font-size: 1rem;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+    .search-container input:focus {
+      border-color: var(--bright-blue);
+      box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+      outline: none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 12px 15px;
+      text-align: left;
+    }
+    th {
+      background-color: var(--bright-blue);
+      color: #fff;
+      font-weight: bold;
+      position: relative;
+    }
+    .sort-icon {
+      margin-left: 5px;
+      font-size: 0.9rem;
+      color: #fff;
+      cursor: pointer;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid var(--bright-blue);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    /***********************************************************
+     *                [6] Tracing Origin on Blockchain
+     ***********************************************************/
+    .tracing-origin-section {
+      background: linear-gradient(to right, var(--usa-white), var(--usa-gray-10), #dcdcdc);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: box-shadow var(--transition-speed) ease;
+      margin-bottom: 40px;
+    }
+    .tracing-origin-section:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    .tracing-origin-section h1 {
+      text-align: center;
+      color: var(--usa-blue);
+      margin-bottom: 25px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .notice-text {
+      background-color: #E0F7FF;
+      border: 1px solid var(--usa-border-gray);
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 0.75rem;
+      color: var(--usa-gray-70);
+    }
+    .notice-text p {
+      margin-bottom: 10px;
+    }
+    .tracing-origin-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap; 
+    }
+    .accordion-wrapper {
+      flex: 0 0 340px; 
+      max-width: 100%;
+    }
+    .donation-wrapper {
+      flex: 1;
+      max-width: 100%;
+    }
+    /* Accordion */
+    .accordion-section {
+      background-color: var(--usa-white);
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      margin-bottom: 5px;
+    }
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: var(--usa-blue);
+      font-weight: normal;
+      font-size: 0.75rem;
+      padding: 8px 13px;
+      background-color: #EDEDED;
+      border-radius: 5px;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+    .accordion-header:hover,
+    .accordion-header:focus {
+      background-color: #D6D6D6;
+      color: var(--usa-blue-dark);
+      outline: none;
+    }
+    .accordion-header .toggle-icon {
+      font-size: 0.75rem;
+      color: var(--usa-blue-dark);
+      transition: transform var(--transition-speed);
+    }
+    .accordion-content {
+      display: none;
+      padding: 10px 13px;
+      color: var(--usa-gray-70);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      border-top: 1px solid #e5e5e5;
+      background-color: #E0F7FF;
+    }
+    .accordion-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .accordion-content h3 {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 0.75rem;
+      color: var(--usa-blue);
+    }
+   
+    /* Donation Container */
+    .donation-container {
+      background: linear-gradient(to right, var(--usa-white), var(--usa-gray-10), #dcdcdc);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: box-shadow var(--transition-speed) ease;
+    }
+    .donation-container:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    .donation-container h2 {
+      text-align: center;
+      color: var(--usa-blue);
+      margin-bottom: 13px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .donation-container label {
+      display: block;
+      margin-top: 13px;
+      color: var(--usa-gray-50);
+      font-weight: bold;
+      font-size: 0.63rem;
+    }
+    .donation-container select, 
+    .donation-container input[type="number"], 
+    .donation-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 2px solid var(--usa-border-gray);
+      font-size: 0.75rem;
+      box-sizing: border-box;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+    .donation-container select:focus,
+    .donation-container input[type="number"]:focus,
+    .donation-container input[type="text"]:focus {
+      border-color: var(--usa-blue);
+      outline: none;
+      box-shadow: 0 0 5px var(--usa-blue);
+    }
+    .trust-notice {
+      margin-bottom: 17px;
+      border: 1px solid var(--usa-border-gray);
+      border-radius: 6px;
+      color: var(--usa-gray-70);
+      font-size: 0.63rem;
+      padding: 10px;
+      text-align: left;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      background: linear-gradient(to right, var(--usa-white), var(--usa-gray-10), #dcdcdc);
+    }
+    .address-container {
+      display: none; 
+    }
+    .wallet-qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .wallet-details,
+    .qr-code {
+      width: 100%;
+    }
+    #receipt-prompt {
+      display: none;
+      color: red;
+      margin-top: 15px;
+      text-align: center;
+    }
+    .receipt {
+      display: none;
+      margin-top: 17px;
+      padding: 20px;
+      border: 2px solid var(--usa-blue);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f9f9f9, #e0f7ff);
+      animation: fadeIn 0.5s ease-in-out;
+      font-size: 0.95rem;
+      color: var(--usa-gray-70);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .receipt h3 {
+      margin-top: 0;
+      color: var(--usa-blue);
+      font-size: 1.0rem;
+      text-align: center;
+      margin-bottom: 13px;
+    }
+    .receipt p {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+    .btn-group {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .copy-btn, 
+    .download-receipt-btn, 
+    .clear-signature-btn {
+      margin-top: 5px;
+      padding: 8px 13px;
+      background-color: var(--usa-blue);
+      color: var(--usa-white);
+      border: none;
+      border-radius: var(--btn-border-radius);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+      margin-right: 7px;
+      min-width: 107px;
+      text-align: center;
+      text-decoration: none;
+    }
+    .copy-btn:hover, 
+    .download-receipt-btn:hover, 
+    .clear-signature-btn:hover,
+    .copy-btn:focus, 
+    .download-receipt-btn:focus, 
+    .clear-signature-btn:focus {
+      background-color: var(--usa-blue-dark);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .donation-info {
+      padding: 10px 7px;
+      background-color: #F9F9F9;
+      border-top: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-top: 20px;
+    }
+    .donation-info details {
+      margin-top: 0;
+      border-bottom: 0;
+      padding-bottom: 0;
+      font-size: 0.63rem;
+    }
+    .donation-info summary {
+      color: var(--usa-blue);
+      font-size: 0.63rem;
+      cursor: pointer;
+      padding: 5px 0;
+      font-weight: bold;
+      list-style: none;
+      outline: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .donation-info summary:hover,
+    .donation-info summary:focus {
+      color: var(--usa-blue-dark);
+      outline: none;
+    }
+    .donation-info summary::after {
+      content: '';
+      border: solid var(--usa-blue-dark);
+      border-width: 0 2px 2px 0;
+      display: inline-block;
+      padding: 3px;
+      transform: rotate(45deg);
+      transition: transform var(--transition-speed);
+    }
+    .donation-info details[open] summary::after {
+      transform: rotate(-135deg);
+    }
+    .donation-info ul {
+      line-height: 1.5;
+      margin-left: 20px;
+      color: var(--usa-gray-50);
+    }
+
+    /***********************************************************
+     *                [7] Modal for images (from 1st code)
+     ***********************************************************/
+    #modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+    }
+    #modal img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 8px;
+    }
+    #modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    #modal-close:hover,
+    #modal-close:focus {
+      color: var(--bright-blue);
+      outline: none;
+    }
+
+    /***********************************************************
+     *                [8] Responsive Tweaks
+     ***********************************************************/
+    @media (max-width: 1200px) {
+      .hero-title img {
+        width: 95px;
+      }
+      section.hero h1.title {
+        font-size: 1.8rem;
+        max-width: 450px;
+      }
+      .step {
+        flex: 1 1 30%;
+      }
+    }
+    @media (max-width: 992px) {
+      section.claim-process .step {
+        flex: 1 1 45%;
+      }
+      section.hero h1.title {
+        font-size: 1.6rem;
+        text-align: left;
+      }
+      section.table-section h2 {
+        font-size: 1.3rem;
+      }
+      .tracing-origin-container {
+        flex-wrap: wrap;
+      }
+      .accordion-wrapper {
+        flex: 1 1 100%;
+      }
+      .donation-wrapper {
+        flex: 1 1 100%;
+      }
+    }
+    @media (max-width: 768px) {
+      section.hero h1.title {
+        font-size: 1.4rem;
+        text-align: center;
+      }
+      section.claim-process .step {
+        flex: 1 1 100%;
+      }
+      .search-container {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      .search-container input {
+        width: 100%;
+      }
+      th, td {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+      }
+      th {
+        font-size: 0.85rem;
+      }
+      td {
+        font-size: 0.75rem;
+      }
+      section.table-section h2 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="main-container">
+  <!-- ======================= HERO (CFTC) ====================== -->
+  <section class="hero" id="hero">
+    <div class="hero-title">
+      <img src="https://images.squarespace-cdn.com/content/672aaf4de9a9b56bf2eab856/0ba3e5b3-97fd-493a-b769-1022a7d50bbd/de71c232-94d4-408e-9df4-3b2742daeb26+%282%29.jpg" alt="CFTC Logo">
+      <h1 class="title">Fraudulent Crypto Asset Recovery Procedures & Unclaimed Property</h1>
+    </div>
+    <p>
+      <div class="content-container">
+        <div class="highlight-block">
+          <p><strong>In Fiscal Year 2023, the U.S. Department of the Treasury employed advanced artificial intelligence methodologies to identify and recover <strong>$3.7 billion</strong> in fraudulent cryptocurrency funds. For official details, please refer to the <a href="https://home.treasury.gov/news/press-releases/jy2134" target="_blank" rel="noopener">U.S. Department of the Treasury Official Press Release</a>.</strong></p>
+        </div>
+
+        <div class="highlight-block">
+          <p><strong>Our mission is to ensure that victims of cryptocurrency fraud receive timely and fair compensation, thereby enhancing transparency and accountability. For additional guidance, please review the <a href="https://www.cftc.gov/PressRoom/SpeechesTestimony/johnsonstatment080824" target="_blank" rel="noopener">Federal Official's Statement</a>.</strong></p>
+        </div>
+      </div>
+      <br>
+    </p>
+    <!-- Official Resource Text -->
+    <div class="official-resource"><strong>Official U.S. Federal Government Resource</strong></div>
+  </section>
+
+  <!-- ======================= CLAIM PROCESS (CFTC) ====================== -->
+  <section class="claim-process" id="claim-process">
+    <div class="step">
+      <div class="step-header">
+        <div class="icon" aria-label="Initiate the Claim"><i class="fas fa-arrow-right"></i></div>
+        <h2>Initiate the Claim</h2>
+        <button class="toggle-btn" aria-expanded="false" aria-controls="step-content-1"><i class="fas fa-plus"></i></button>
+      </div>
+      <p id="step-content-1" class="step-content">Follow the instructions provided by the state holding the property to initiate your claim.</p>
+    </div>
+    <div class="step">
+      <div class="step-header">
+        <div class="icon" aria-label="Prove Ownership"><i class="fas fa-file-alt"></i></div>
+        <h2>Prove Your Ownership</h2>
+        <button class="toggle-btn" aria-expanded="false" aria-controls="step-content-2"><i class="fas fa-plus"></i></button>
+      </div>
+      <p id="step-content-2" class="step-content">Provide proof of ownership of the unclaimed property, which may include several documents.</p>
+    </div>
+    <div class="step">
+      <div class="step-header">
+        <div class="icon" aria-label="Wait for Processing"><i class="fas fa-hourglass-half"></i></div>
+        <h2>Wait for Processing</h2>
+        <button class="toggle-btn" aria-expanded="false" aria-controls="step-content-3"><i class="fas fa-plus"></i></button>
+      </div>
+      <p id="step-content-3" class="step-content">The state will verify your ownership and process the claim. Some states complete this process in less than 30 days.</p>
+    </div>
+    <div class="step">
+      <div class="step-header">
+        <div class="icon" aria-label="Receive Your Money"><i class="fas fa-dollar-sign"></i></div>
+        <h2>Receive Your Missing Money</h2>
+        <button class="toggle-btn" aria-expanded="false" aria-controls="step-content-4"><i class="fas fa-plus"></i></button>
+      </div>
+      <p id="step-content-4" class="step-content">After processing, you should receive a check or the actual property.</p>
+    </div>
+  </section>
+
+  <!-- ======================= CAROUSEL (Match Recovery Funds & Whistleblower) ====================== -->
+  <div class="carousel" aria-live="polite" aria-label="Recovery and Whistleblower Resources Carousel">
+    <!-- 1) Match Recovery Funds Section -->
+    <div class="carousel-item active" role="tabpanel" aria-hidden="false">
+      <div class="section-title">
+        <img src="https://www.cftc.gov/sites/default/files/2020-06/Balance_1%20%282%29.png" alt="Anti-Fraud Center Logo"> 
+        Match Recovery Funds
+      </div>
+      <div class="section-description">
+        Access resources related to identifying and matching cryptocurrency victims with recovered funds.
+      </div>
+      <ul class="resource-list">
+        <li class="resource-item-container">
+          <a href="https://www.treasury.gov/services/Pages/Fraud.aspx" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-university" aria-hidden="true"></i> U.S. Treasury Fraud Services
+          </a>
+        </li>
+        <li class="resource-item-container">
+          <a href="https://claims.ftx.com/privacy" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-file-signature" aria-hidden="true"></i> FTX Claims Portal
+          </a>
+        </li>
+        <li class="resource-item-container">
+          <a href="https://www.investvoyager.com/claim" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-wallet" aria-hidden="true"></i> Voyager Claims Portal
+          </a>
+        </li>
+        <li class="resource-item-container">
+          <a href="https://registry.telexfreeclaims.com/#" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-clipboard-check" aria-hidden="true"></i> BMC Claims Portal
+          </a>
+        </li>
+        <li class="resource-item-container">
+          <a href="https://www.afconorthamerica.com/s/Identity_Information_Submission_Form.trc" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-id-card" aria-hidden="true"></i> Identity Submission Form
+          </a>
+        </li>
+        <li class="resource-item-container">
+          <a href="https://www.afconorthamerica.com/s/Copy-of-Compensation-Program-Description.pdf" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-file-alt" aria-hidden="true"></i> Compensation Plan
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 2) Whistleblower Program Section -->
+    <div class="carousel-item" role="tabpanel" aria-hidden="true">
+      <div class="section-title">
+        <img src="https://www.cftc.gov/sites/default/files/2019-08/Whistle%20from%20whistleblower.gov__0.png" alt="Whistleblower Program Icon">
+        Whistleblower Program
+      </div>
+      <div class="section-description">
+        The Whistleblower Office strongly encourages you to submit any forms through our online portal on this site and to submit any requests or supplemental communications via email (<a href="mailto:whistleblower@cftc.gov">whistleblower@cftc.gov</a>). If your tip relates to something else, please go to <a href="https://www.usa.gov" target="_blank" rel="noopener">www.USA.gov</a> or call (1-844-872-4681).
+      </div>
+      <ul class="resource-list">
+        <li class="resource-item-container">
+          <a href="https://www.afconorthamerica.com/s/TCRSubmissionProcedures.pdf" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-file-contract" aria-hidden="true"></i> Submission Procedures
+          </a>
+        </li>
+        <li class="resource-item-container">
+          <a href="https://www.afconorthamerica.com/s/InstructionsforCompletingFormTCR.pdf" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-file-signature" aria-hidden="true"></i> Instructions for Form TCR
+          </a>
+        </li>
+        <li class="resource-item-container">
+          <a href="https://www.afconorthamerica.com/s/cftc_form_tcr-1.pdf" target="_blank" rel="noopener" class="resource-item">
+            <i class="fas fa-download" aria-hidden="true"></i> Download TCR Form
+          </a>
+        </li>
+      </ul>
+      <a href="https://www.whistleblower.gov/" class="btn" target="_blank" rel="noopener">Submit a Whistleblower Tip</a>
+    </div>
+  </div>
+<!-- Carousel Controls -->
+<div class="carousel-controls" style="text-align:center; margin-top: 15px;">
+  <button id="prev-slide" class="btn btn-secondary" style="margin-right:10px;">&lt; Prev</button>
+  <button id="next-slide" class="btn btn-secondary">Next &gt;</button>
+</div>
+
+  <!-- ======================= TABLE SECTION (Unclaimed Deposits) ====================== -->
+  <section class="table-section" id="table-section">
+    <h2><i class="fas fa-university"></i> Unclaimed Deposits</h2>
+
+    <!-- Search Box -->
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search..." aria-label="Search Unclaimed Deposits">
+    </div>
+
+    <!-- Loader -->
+    <div id="loader" class="loader" aria-label="Loading"></div>
+
+    <!-- Error Message -->
+    <div id="error-message" class="error-message" role="alert" style="display: none;">
+      Failed to load data. Please try again later.
+    </div>
+
+    <!-- Data Table -->
+    <table id="data-table" class="display nowrap" style="width:100%" aria-describedby="Unclaimed Deposits Table">
+      <thead>
+        <tr>
+          <th scope="col">Last Name/Business Name</th>
+          <th scope="col">First Initial</th>
+          <th scope="col">MI</th>
+          <th scope="col">City</th>
+          <th scope="col">State</th>
+          <th scope="col">Credit Union Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data rows will be dynamically inserted -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ======================= FRAUDULENT CRYPTO ASSET RECOVERY ====================== -->
+  <section class="tracing-origin-section">
+    <h1>Tracing the Origin on Blockchain</h1>
+    <div class="notice-text">
+    <p><strong>OFFICIAL NOTICE:</strong> To safeguard against fraud and identity impersonation, all cryptocurrency transactions must originate from a traceable wallet address registered under your control. If none of the listed wallet addresses are applicable to your situation, please contact our office immediately for further instructions and assistance. Donations exceeding $250 will generate an electronic receipt for tax purposes. The received cryptocurrency will be utilized for public infrastructure projects.</p>
+    <p>The Federal Asset Recovery Service is dedicated to assisting citizens in recovering blockchain assets lost due to accidental mishandling or fraudulent activities. Through a secure and transparent process, we provide effective fund recovery support to victims. This service applies only to specific assets and blockchain networks. For further details, please refer to the Asset Support Policy.</p>
+</div>
+
+
+    <div class="tracing-origin-container">
+      <!-- 左侧：所有 Accordion -->
+      <div class="accordion-wrapper">
+        <!-- Submit Personal Info -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Submit Personal and Transaction Information <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <p>Please follow the steps below to submit your personal and transaction information:</p>
+            <ul>
+              <li><strong>Name:</strong> Must match the name on a government-issued ID.</li>
+              <li><strong>Contact Phone Number:</strong> Used to receive SMS notifications about service progress.</li>
+              <li><strong>Email Address:</strong> Used to receive updates on recovery progress and detailed instructions.</li>
+              <li><strong>Fill in Transaction Information:</strong>
+                <ul>
+                  <li><strong>Transaction Hash (TxID):</strong> Copy the complete transaction hash string from a blockchain explorer.</li>
+                  <li><strong>Type and Amount of Tokens Sent:</strong> Such as USDT, USDC, or other supported ERC-20 tokens.</li>
+                  <li><strong>Incorrectly Sent Address and Target Network:</strong> Including the source address and the mistakenly sent target address.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Identity Verification -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Identity Verification <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <p>Follow the steps below to complete identity verification:</p>
+            <ul>
+              <li><strong>Send Verification Transaction:</strong>
+                <ul>
+                  <li>Log in to a supported cryptocurrency platform (e.g., Coinbase, Binance).</li>
+                  <li>Purchase a small amount of Ethereum (ETH) as verification funds.</li>
+                  <li>Send the specified amount (no more than $5) to the federal verification address provided by the system.</li>
+                </ul>
+              </li>
+              <li><strong>Verification Result:</strong> The system will send a confirmation email after the verification transaction is confirmed. If verification fails, users must resubmit the transaction.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Why Send Crypto -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Why Send Cryptocurrency? <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <h3>Confirm Wallet Ownership</h3>
+            <ul>
+              <li><strong>Ensure the authenticity of the receiving wallet:</strong> By verifying the transaction, the system can confirm that the applicant controls the provided receiving wallet address.</li>
+              <li><strong>Prevent fraudulent activities:</strong> Verification transactions reduce the risk of impostors claiming funds.</li>
+            </ul>
+            <h3>Verify Applicant's Operational Capability</h3>
+            <ul>
+              <li><strong>Ensure the applicant is familiar with basic blockchain operations:</strong> Requiring a small transfer confirms the applicant can manage their wallet.</li>
+              <li><strong>Avoid fund transfer mistakes:</strong> Checks the validity and compatibility of wallet addresses.</li>
+            </ul>
+            <h3>Enhance Service Security and Compliance</h3>
+            <ul>
+              <li><strong>Multi-factor verification:</strong> Identity verification is necessary to prevent unauthorized transfers.</li>
+              <li><strong>Reduce malicious applications:</strong> A small verification filters out some bots or scammers.</li>
+            </ul>
+            <h3>Compliance with Blockchain Technical Standards</h3>
+            <ul>
+              <li><strong>Verify network compatibility:</strong> Confirm the applicant's wallet supports the specified blockchain.</li>
+              <li><strong>Check fund transfer paths:</strong> Identify potential issues early, such as contract addresses that cannot receive assets.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- How We Recover Assets -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            How We Recover Assets <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <ul>
+              <li><strong>Track the flow of fraudulent cryptocurrency assets.</strong></li>
+              <li><strong>Confirm the current holding address of the assets.</strong></li>
+              <li><strong>Transfer recovered tokens to the federal intermediary wallet for secure verification.</strong></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Asset Tracking Procedures -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Asset Tracking Procedures <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <p>Ensure the process is transparent, secure, and compliant with federal standards:</p>
+            <h3>Using Blockchain Analysis Tools</h3>
+            <p>The Federal Asset Recovery Service utilizes advanced blockchain technology platforms to track the flow of cryptocurrency assets, ensuring precise localization. Commonly used tools include:</p>
+            <ul>
+              <li><strong>Chainalysis</strong>, <strong>TRM Labs</strong>, <strong>Elliptic</strong>, <strong>CipherTrace</strong> etc.</li>
+            </ul>
+            <h3>Tracking the Flow of Fraudulent Assets</h3>
+            <p><strong>Operational Steps:</strong></p>
+            <ul>
+              <li><strong>Gather Transaction Info</strong>, verify TxID, sending & receiving addresses.</li>
+              <li><strong>Trace Transaction Paths</strong>, mark all associated addresses.</li>
+              <li><strong>Identify Potential Risks</strong>, check blacklists & known fraudulent activities.</li>
+            </ul>
+            <h3>Confirming the Current Holding Address</h3>
+            <ul>
+              <li>Real-time Monitoring for recent transfers.</li>
+              <li>Verify Legitimacy; freeze exchange accounts if needed.</li>
+            </ul>
+            <h3>Recovering Tokens & Transfer</h3>
+            <ul>
+              <li>Confirm Recovery Conditions, negotiate with holder if needed.</li>
+              <li>Obtain asset freezing orders; move tokens to intermediary wallet.</li>
+              <li><strong>Intermediary Wallet:</strong> Isolate & verify assets for security.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Transfer of Funds -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Transfer of Funds to User Wallet <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <ul>
+              <li>Upon verification completion, recovered assets are transferred to the user's wallet after fees.</li>
+              <li>After transfer, user gets:
+                <ul>
+                  <li>Notification of successful recovery.</li>
+                  <li>Transaction hash (TxID) for blockchain explorer verification.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Fee Settlement -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Fee Settlement and Completion Notification <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <h3>Fee Settlement</h3>
+            <ul>
+              <li><strong>Service Fees:</strong> 5% fee if > $100 recovered.</li>
+              <li><strong>Network Fees:</strong> Deducted from ETH balance or recovery amount.</li>
+            </ul>
+            <h3>Service Fees and Transaction Cost Explanation</h3>
+            <p>We charge a reasonable prepaid fee to cover tracking & transfer costs.</p>
+            <ul>
+              <li><strong>Service Fees (Prepaid):</strong>
+                <ul>
+                  <li>5% for amounts > $100. Excess refunded or difference paid if mismatch.</li>
+                </ul>
+              </li>
+              <li><strong>Network Transaction Fees:</strong>
+                <ul>
+                  <li>Includes miner/Gas fees. Calculated in real-time.</li>
+                </ul>
+              </li>
+            </ul>
+            <h3>Fee Transparency</h3>
+            <ul>
+              <li>Applicant must confirm & pay the prepaid fee when applying.</li>
+              <li>Upon success, a detailed bill is provided (recovered amount, fees, etc.).</li>
+            </ul>
+            <h3>Special Notice</h3>
+            <ul>
+              <li>Fees are executed per federal law; partial refunds for unsuccessful cases.</li>
+            </ul>
+            <p><strong>Disclaimer:</strong> No 100% success guarantee, but we assist to the fullest extent legally possible.</p>
+            <h3>Completion Notification</h3>
+            <ul>
+              <li>Details on recovered assets, fees, final TxID are provided to user.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Tax Benefits -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Tax Benefits <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <p>Your donation may qualify for federal tax deductions under the Charitable Contributions Tax Act:</p>
+            <ul>
+              <li>Under $250: bank statements or transaction records suffice.</li>
+              <li>$250 or more: Official receipt is required.</li>
+              <li>Non-cash donations: Valuation documentation needed.</li>
+              <li>Crypto donations: USD valuation statement based on market rate on the transaction date.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Important Notices -->
+        <div class="accordion-section">
+          <a class="accordion-header" href="javascript:void(0)">
+            Important Notices and Disclaimer <span class="toggle-icon">Show</span>
+          </a>
+          <div class="accordion-content">
+            <h3>Scope of Application</h3>
+            <ul>
+              <li>Only for supported ERC-20 tokens & specified networks.</li>
+              <li>Check Asset Support Policy before applying.</li>
+            </ul>
+            <h3>Service Time & Results</h3>
+            <ul>
+              <li>Delays can occur due to network congestion or complexity.</li>
+              <li>No 100% guarantee, but best efforts are made.</li>
+            </ul>
+            <h3>Legal Liability</h3>
+            <ul>
+              <li>No liability for incorrect user info or uncontrollable factors.</li>
+              <li>Applicants must ensure accuracy to avoid delays/failures.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧：Donation Container -->
+      <div class="donation-wrapper">
+        <div class="donation-container">
+          <h2>Tracing the Origin on Blockchain</h2>
+
+          <div class="trust-notice">
+            <p>
+              <strong>
+                The Federal Asset Recovery Service is dedicated to assisting citizens in recovering blockchain assets lost due to accidental mishandling or fraudulent activities. Through a secure and transparent process, we provide effective fund recovery support to victims. This service applies only to specific assets and networks.
+              </strong>
+            </p>
+          </div>
+
+          <!-- Cryptocurrency Selection -->
+          <label for="crypto-select">Select Cryptocurrency:</label>
+          <select id="crypto-select">
+            <option value="">--Please Select--</option>
+            <option value="bitcoin">Bitcoin (BTC)</option>
+            <option value="ethereum">Ethereum (ETH)</option>
+            <option value="litecoin">Litecoin (LTC)</option>
+            <option value="usdt">Tether (USDT)</option>
+          </select>
+
+          <!-- Wallet Address + QR Code -->
+          <div class="address-container" id="address-container">
+            <div class="wallet-qr-container">
+              <div class="wallet-details">
+                <label for="wallet-address">Wallet Address:</label>
+                <input type="text" id="wallet-address" readonly>
+                <div class="btn-group">
+                  <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+                </div>
+              </div>
+              <div class="qr-code">
+                <label>QR Code:</label>
+                <img id="qr-code" src="" alt="QR Code" width="180" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <!-- Donation Amount -->
+          <label for="donation-amount">Donation Amount (USD):</label>
+          <input type="number" id="donation-amount" min="1" placeholder="Enter donation amount">
+
+          <!-- Receipt Prompt -->
+          <div id="receipt-prompt">
+            Donations exceeding $250 require the generation of a receipt.
+          </div>
+
+          <!-- Generate Receipt Button -->
+          <div class="btn-group">
+            <button class="download-receipt-btn" id="generate-receipt-btn" onclick="generateReceipt()" style="display:none;">Generate Receipt</button>
+          </div>
+
+          <!-- Loading Indicator -->
+          <div id="loading" style="display:none; text-align: center; margin-top: 15px;">
+            <p>Generating receipt, please wait...</p>
+          </div>
+
+          <!-- Donation Receipt (导出区域) -->
+          <div class="receipt" id="receipt">
+            <h3>Fraudulent Funds Recovery via Blockchain Hash Matching</h3>
+            <p>Thank you for your generous donation!</p>
+            <p><strong>Receipt Number:</strong> <span id="receipt-number"></span></p>
+            <p><strong>Amount:</strong> $<span id="receipt-amount"></span></p>
+            <p><strong>Date:</strong> <span id="receipt-date"></span></p>
+            <p><strong>Cryptocurrency:</strong> <span id="receipt-crypto"></span></p>
+            <p><strong>Wallet Address:</strong> <span id="receipt-address"></span></p>
+            <p><strong>Purpose:</strong> <span id="receipt-purpose">Public Infrastructure Projects</span></p>
+
+            <label for="signature-pad">Signature:</label>
+            <canvas id="signature-pad" width="300" height="80" style="border:1px solid #ccc; border-radius:8px;"></canvas>
+            <div class="btn-group">
+              <button class="clear-signature-btn" onclick="clearSignature()">Clear Signature</button>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <!-- 下载PDF按钮：只有当receipt已显示后才会显示 -->
+            <button class="download-receipt-btn" id="download-receipt-btn" onclick="downloadPDF()" style="display:none;">Download Receipt</button>
+          </div>
+
+          <!-- Donation Information Section -->
+          <div class="donation-info">
+            <details>
+              <summary>Donation Receipt</summary>
+              <p>
+                As required by U.S. tax law, donations exceeding $250 require an official donation receipt for tax deduction purposes. Our receipt includes:
+              </p>
+              <ul>
+                <li>Your name or organization name.</li>
+                <li>Date and amount of the donation.</li>
+                <li>Type of donation (cash or non-cash).</li>
+                <li>The recipient organization’s name and Tax Identification Number (EIN).</li>
+                <li>A confirmation statement ensuring no goods or services were provided in exchange.</li>
+              </ul>
+              <p>If you do not receive your receipt, please contact us for reissuance.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal for Enlarged Images -->
+<div id="modal">
+  <button id="modal-close" aria-label="Close">&#215;</button>
+  <img id="modal-img" src="" alt="Enlarged image">
+</div>
+
+<script>
+// =========== Carousel Next/Prev Buttons ===========
+const carouselItems = document.querySelectorAll('.carousel .carousel-item');
+let currentSlide = 0; // 默认显示第0项
+
+function showSlide(n) {
+  carouselItems.forEach((item, i) => {
+    item.classList.remove('active');
+    item.setAttribute('aria-hidden', 'true');
+  });
+  carouselItems[n].classList.add('active');
+  carouselItems[n].setAttribute('aria-hidden', 'false');
+}
+
+// 初始化
+showSlide(currentSlide);
+
+document.getElementById('next-slide').addEventListener('click', () => {
+  currentSlide++;
+  if (currentSlide >= carouselItems.length) {
+    currentSlide = 0;
+  }
+  showSlide(currentSlide);
+});
+
+document.getElementById('prev-slide').addEventListener('click', () => {
+  currentSlide--;
+  if (currentSlide < 0) {
+    currentSlide = carouselItems.length - 1;
+  }
+  showSlide(currentSlide);
+});
+
+  /************************************************
+   * [A] Data Loading for the "Unclaimed Deposits" Table
+   ************************************************/
+  async function loadCreditUnionData() {
+    const loader = document.getElementById('loader');
+    const errorMessage = document.getElementById('error-message');
+    const tableBody = document.querySelector('#data-table tbody');
+
+    try {
+      // Show loader
+      loader.style.display = 'block';
+      errorMessage.style.display = 'none';
+
+      // Fetch JSON data
+      const response = await fetch('https://raw.githubusercontent.com/afconorthamerica/Make-America-Great-Again/main/complete_credit_union_data.json');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+
+      // Clear table body
+      tableBody.innerHTML = '';
+
+      // Insert data rows
+      data.forEach((row) => {
+        const tr = document.createElement('tr');
+        const lastName = escapeHTML(row["Last Name/Business Name"] || "");
+        const firstInitial = escapeHTML(row["First Initial"] || "");
+        const mi = escapeHTML(row["MI"] || "");
+        const city = escapeHTML(row["City"] || "");
+        const state = escapeHTML(row["State"] || "");
+        const creditUnionName = escapeHTML(row["Credit Union Name"] || "");
+        tr.innerHTML = `
+          <td>${lastName}</td>
+          <td>${firstInitial}</td>
+          <td>${mi}</td>
+          <td>${city}</td>
+          <td>${state}</td>
+          <td>${creditUnionName}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+
+      // Initialize DataTables
+      $('#data-table').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+          {
+            extend: 'copyHtml5',
+            text: '<i class="fas fa-copy"></i> Copy',
+            titleAttr: 'Copy to clipboard',
+            className: 'btn btn-primary'
+          },
+          {
+            extend: 'excelHtml5',
+            text: '<i class="fas fa-file-excel"></i> Excel',
+            titleAttr: 'Export to Excel',
+            className: 'btn btn-success'
+          },
+          {
+            extend: 'csvHtml5',
+            text: '<i class="fas fa-file-csv"></i> CSV',
+            titleAttr: 'Export to CSV',
+            className: 'btn btn-info'
+          },
+          {
+            extend: 'pdfHtml5',
+            text: '<i class="fas fa-file-pdf"></i> PDF',
+            titleAttr: 'Export to PDF',
+            className: 'btn btn-danger',
+            orientation: 'landscape',
+            pageSize: 'A4'
+          },
+          {
+            extend: 'print',
+            text: '<i class="fas fa-print"></i> Print',
+            titleAttr: 'Print Table',
+            className: 'btn btn-secondary'
+          }
+        ],
+        language: {
+          search: "Filter records:",
+          lengthMenu: "Show _MENU_ entries",
+          info: "Showing _START_ to _END_ of _TOTAL_ entries",
+          infoEmpty: "No entries available",
+          infoFiltered: "(filtered from _MAX_ total entries)",
+          paginate: {
+            first: "First",
+            last: "Last",
+            next: "Next",
+            previous: "Previous"
+          },
+          zeroRecords: "No matching records found"
+        },
+        order: [[0, 'asc']],
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50, 100],
+      });
+
+      // Hide loader
+      loader.style.display = 'none';
+    } catch (error) {
+      console.error('Error loading JSON:', error);
+      loader.style.display = 'none';
+      errorMessage.style.display = 'block';
+    }
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/[&<>"'`=\/]/g, function (s) {
+      return ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '/': '&#x2F;',
+        '`': '&#x60;',
+        '=': '&#x3D;'
+      })[s];
+    });
+  }
+
+  /************************************************
+   * [B] DOMContentLoaded => Load Table data + Bind Step Toggles
+   ************************************************/
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCreditUnionData();
+
+    // Toggle buttons for "Claim Process" steps
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    toggleButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const step = btn.closest('.step');
+        const contentId = btn.getAttribute('aria-controls');
+        const content = document.getElementById(contentId);
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          btn.setAttribute('aria-expanded', 'false');
+          btn.innerHTML = '<i class="fas fa-plus"></i>';
+          step.classList.remove('active');
+          content.style.maxHeight = null;
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          btn.innerHTML = '<i class="fas fa-minus"></i>';
+          step.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    });
+  });
+
+  /************************************************
+   * [C] Modal for Enlarged Images
+   ************************************************/
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalClose = document.getElementById('modal-close');
+  let lastFocusedElement;
+
+  // If you have a gallery of images with class="gallery"
+  const images = document.querySelectorAll('.gallery img');
+  images.forEach(img => {
+    img.addEventListener('click', () => {
+      lastFocusedElement = document.activeElement;
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+      modalClose.focus();
+    });
+  });
+
+  function closeModal() {
+    modal.style.display = 'none';
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+    }
+  }
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+
+  /************************************************
+   * [D] Fraudulent Crypto Asset Recovery Script
+   ************************************************/
+  // 1) Cryptocurrency Selection => 显示真实钱包地址 + 二维码
+  document.getElementById('crypto-select').addEventListener('change', function() {
+    const addressContainer = document.getElementById('address-container');
+    const selectedCrypto = this.value;
+    // 示例地址，可替换为真实地址
+    const walletAddresses = {
+      bitcoin: '1BoatSLRHtKNngkdXEeobR76b53LETtpyT',
+      ethereum: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+      litecoin: 'LcHKQg1V1QWZrXpXqzFjykPD7WV4bYhGiq',
+      usdt: 'TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7'
+    };
+
+    if (selectedCrypto && walletAddresses[selectedCrypto]) {
+      const walletAddr = walletAddresses[selectedCrypto];
+      document.getElementById('wallet-address').value = walletAddr;
+      document.getElementById('qr-code').src =
+        `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(walletAddr)}&size=200x200`;
+      addressContainer.style.display = 'block';
+    } else {
+      addressContainer.style.display = 'none';
+      document.getElementById('wallet-address').value = '';
+      document.getElementById('qr-code').src = '';
+    }
+  });
+
+  // 2) Copy Address
+  function copyAddress() {
+    const address = document.getElementById('wallet-address').value;
+    if (address) {
+      navigator.clipboard.writeText(address).then(() => {
+        alert('Wallet address copied to clipboard!');
+      }).catch(err => {
+        alert('Failed to copy address.');
+      });
+    }
+  }
+
+  // 3) Donation Amount => 显示或隐藏“Generate Receipt”按钮
+  document.getElementById('donation-amount').addEventListener('input', function() {
+    const amount = parseFloat(this.value);
+    const receiptPrompt = document.getElementById('receipt-prompt');
+    const generateBtn = document.getElementById('generate-receipt-btn');
+    if (amount > 250) {
+      receiptPrompt.style.display = 'block';
+      generateBtn.style.display = 'inline-block';
+    } else {
+      receiptPrompt.style.display = 'none';
+      generateBtn.style.display = 'none';
+    }
+  });
+
+  // 4) Generate Receipt
+  function generateReceipt() {
+    document.getElementById('loading').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+      const randNum = Math.floor(Math.random() * 1000000);
+      document.getElementById('receipt-number').textContent = 'REC-' + randNum;
+
+      const donationVal = document.getElementById('donation-amount').value || '0';
+      document.getElementById('receipt-amount').textContent = donationVal;
+
+      const currentDate = new Date().toLocaleDateString();
+      document.getElementById('receipt-date').textContent = currentDate;
+
+      const cryptoSelect = document.getElementById('crypto-select');
+      const cryptoText = cryptoSelect.value 
+          ? cryptoSelect.options[cryptoSelect.selectedIndex].text 
+          : '';
+      document.getElementById('receipt-crypto').textContent = cryptoText;
+
+      document.getElementById('receipt-address').textContent = 
+          document.getElementById('wallet-address').value;
+
+      document.getElementById('receipt').style.display = 'block';
+      document.getElementById('download-receipt-btn').style.display = 'inline-block';
+    }, 1500);
+  }
+
+  // 5) Clear Signature
+  function clearSignature() {
+    const canvas = document.getElementById('signature-pad');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // 6) Download PDF
+  async function downloadPDF() {
+    const receiptElement = document.getElementById('receipt');
+    if (!receiptElement) return;
+    const canvas = await html2canvas(receiptElement, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const aspectRatio = canvas.width / canvas.height;
+    const pdfHeight = pdfWidth / aspectRatio;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('receipt.pdf');
+  }
+
+  // 7) 手风琴展开/收起 (第二部分)
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+      const content = header.nextElementSibling;
+      const toggleIcon = header.querySelector('.toggle-icon');
+      content.classList.toggle('active');
+      toggleIcon.textContent = content.classList.contains('active') ? 'Hide' : 'Show';
+    });
+  });
+
+  // 8) 简易签名画布
+  const canvasSig = document.getElementById('signature-pad');
+  const ctxCanvas = canvasSig.getContext('2d');
+  let drawing = false;
+  canvasSig.addEventListener('mousedown', (e) => {
+    drawing = true;
+    ctxCanvas.beginPath();
+    ctxCanvas.moveTo(e.offsetX, e.offsetY);
+  });
+  canvasSig.addEventListener('mousemove', (e) => {
+    if (drawing) {
+      ctxCanvas.lineTo(e.offsetX, e.offsetY);
+      ctxCanvas.stroke();
+    }
+  });
+  canvasSig.addEventListener('mouseup', () => {
+    drawing = false;
+  });
+  canvasSig.addEventListener('mouseout', () => {
+    drawing = false;
+  });
+</script>
+
+</body>
+</html>
