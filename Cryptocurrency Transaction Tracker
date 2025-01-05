@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 在移动端可以更好地自适应屏幕宽度 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO 相关信息，可自行修改 -->
+  <meta name="description" content="A professional and authoritative Cryptocurrency Transaction Tracker." />
+  <meta name="keywords" content="Cryptocurrency, BTC, ETH, USDT, blockchain transactions" />
+  <meta name="author" content="Top Developer" />
+  <title>Cryptocurrency Transaction Tracker & Extended</title>
+
+  <!-- 引用谷歌字体（美国官方常见无衬线字体，可替换为其他） -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Plotly 用于3D图和Sankey 图表，可保持最新版 -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style>
+    /* ==============================
+       0. 全局与通用基础样式
+       ============================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #f7f8f9;
+      color: #2f2f2f;
+      line-height: 1.5;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600;
+      color: #1a3b69;
+    }
+    a {
+      color: #1a3b69;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==============================
+       1. 外层布局容器
+       ============================== */
+    #outer-container {
+      width: 95%;
+      max-width: 1600px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    #container {
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* 主标题 */
+    h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* ==============================
+       2. 警告提示与 Loading
+       ============================== */
+    .alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .alert-danger {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+    /* role="alert" 语义化无障碍提示 */
+    #errorAlert[role="alert"] {
+      margin-top: 10px;
+    }
+    .hidden {
+      display: none;
+    }
+
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      z-index: 99;
+    }
+    .loading-indicator {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+    }
+    .loading-indicator div {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #1a3b69;
+      border-radius: 50%;
+      animation: loading-indicator 1.2s linear infinite;
+    }
+    @keyframes loading-indicator {
+      0%, 20%, 80%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+    }
+    /* 测试用样例，省略具体12小球定位 */
+
+    /* ==============================
+       3. 功能按钮与输入框
+       ============================== */
+    .input-group {
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #a6a6a6;
+      border-radius: 3px;
+      font-size: 16px;
+    }
+    .button-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .button-group button {
+      padding: 10px 20px;
+      background-color: #1a3b69;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .button-group button:hover {
+      background-color: #2b4e8a;
+    }
+    /* 移动端按钮：切换3D视图 */
+    #togglePathButton {
+      display: none; /* 在小屏设备时才显示，可通过JS或媒体查询控制 */
+    }
+
+    /* ==============================
+       4. 表格与分页
+       ============================== */
+    .table-container {
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+    th {
+      background-color: #eaeaea;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .risk-label {
+      color: #b10f0f;
+      font-weight: bold;
+    }
+    /* 分页样式 */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .pagination-container button {
+      background-color: #fff;
+      color: #1a3b69;
+      border: 1px solid #1a3b69;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    .pagination-container button.active {
+      background-color: #1a3b69;
+      color: #fff;
+    }
+    .pagination-container button:hover {
+      background-color: #2b4e8a;
+      color: #fff;
+    }
+
+    /* ==============================
+       5. 可视化容器 (3D / Sankey)
+       ============================== */
+    #pathContainer {
+      height: 500px; 
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    #sankeyContainer {
+      width: 100%;
+      height: 400px;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    /* ==============================
+       6. 自定义面板
+       ============================== */
+    .customization-panel {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .customization-panel h4 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #1a3b69;
+    }
+    .customization-panel label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .customization-panel input[type="color"] {
+      width: 100%;
+      height: 30px;
+      padding: 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .customization-panel button {
+      background-color: #1a3b69;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 8px 16px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    .customization-panel button:hover {
+      background-color: #2b4e8a;
+    }
+
+    /* ==============================
+       7. 地址画像与风险评分
+       ============================== */
+    .address-profile-panel {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      display: none;
+    }
+    .address-profile-panel h4 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #1a3b69;
+    }
+    .profile-info {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    /* ==============================
+       8. 取证报告显示区
+       ============================== */
+    .report-container {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #fefefe;
+      display: none; /* 初始隐藏 */
+    }
+    .report-container h4 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #1a3b69;
+    }
+    .report-output {
+      white-space: pre-wrap; 
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+      overflow: auto;
+      max-height: 300px;
+    }
+
+    /* ==============================
+       9. 分栏布局与响应式
+       ============================== */
+    .content-layout {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .graph-container {
+      flex: 1.5;
+      min-width: 400px;
+    }
+    .table-customization-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .content-layout {
+        flex-direction: column-reverse;
+      }
+      /* 移动端展示切换3D图按钮 */
+      #togglePathButton {
+        display: block;
+        width: 100%;
+      }
+      #pathContainer {
+        display: none; /* 默认在移动端先隐藏，可由toggle按钮显式切换 */
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="outer-container">
+  <div id="container">
+    <h2>Cryptocurrency Transaction Tracker (Extended)</h2>
+
+    <!-- 错误警告 -->
+    <div class="alert alert-danger hidden" id="errorAlert" role="alert"></div>
+
+    <!-- 输入框 -->
+    <div class="input-group">
+      <input
+        type="text"
+        id="walletAddress"
+        placeholder="Enter wallet address (BTC, ETH, or USDT)"
+      />
+    </div>
+
+    <!-- 功能按钮组：BTC/ETH/USDT + 画像 + 报告 -->
+    <div class="button-group">
+      <button>BTC</button>
+      <button>ETH</button>
+      <button>USDT</button>
+      <button id="togglePathButton" onclick="togglePathVisualization()">
+        Show/Hide 3D Path
+      </button>
+      <button id="addressProfileBtn">Address Profile</button>
+      <button id="generateReportBtn">Generate Report</button>
+    </div>
+
+    <!-- Loading 遮罩层与动画 -->
+    <div class="loading-overlay" id="loadingOverlay"></div>
+    <div class="loading-indicator" id="loadingIndicator">
+      <!-- 省略12个小球的定位，仅示意 -->
+      <div></div><div></div><div></div><div></div><div></div><div></div>
+      <div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+
+    <!-- 主体内容布局：左侧图表区 + 右侧表格与定制面板 -->
+    <div class="content-layout">
+      <div class="graph-container">
+        <!-- 3D 资金流向图 -->
+        <div id="pathContainer"></div>
+        <!-- Sankey 2D 可视化图 -->
+        <div id="sankeyContainer"></div>
+      </div>
+
+      <div class="table-customization-container">
+        <!-- 交易记录表格 -->
+        <div class="table-container">
+          <table id="transactionsTable">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Hash</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Fee</th>
+                <th>Risk Label</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <!-- 分页按钮 -->
+        <div class="pagination-container" id="paginationContainer"></div>
+
+        <!-- 可视化自定义面板 -->
+        <div class="customization-panel">
+          <h4>Customize Graph</h4>
+          <label for="nodeColor">Node Color</label>
+          <input type="color" id="nodeColor" value="#008000" />
+          <label for="myNodeColor">Searched Address Node Color</label>
+          <input type="color" id="myNodeColor" value="#0000ff" />
+          <label for="edgeColor">Edge Color</label>
+          <input type="color" id="edgeColor" value="#808080" />
+          <button onclick="updateGraphAppearance()">Update</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 地址画像面板 -->
+    <div class="address-profile-panel" id="addressProfilePanel">
+      <h4>Address Profile & Risk Score</h4>
+      <div class="profile-info" id="profileInfo"></div>
+    </div>
+
+    <!-- 取证报告容器 -->
+    <div class="report-container" id="reportContainer">
+      <h4>Investigation Report</h4>
+      <div class="report-output" id="reportOutput"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==============================
+   0. 全局配置与初始化
+   ============================== */
+const etherscanApiKey = 'D5VQCJG5N5FN7B92YA4EG48NSKK1EDPI9H';
+const usdtContractAddress = '0xdac17f958d2ee523a2206206994597c13d831ec7';
+
+// 分页设置
+const rowsPerPage = 10;
+let currentPage = 1;
+let totalPages = 1;
+
+// 全局状态
+let currentCurrency = null;
+let currentAddress = null;
+let currentTransactions = [];
+let plotlyGraphObject = null;
+
+/* ==============================
+   1. 页面加载事件
+   ============================== */
+document.addEventListener('DOMContentLoaded', () => {
+  // 1.1 绑定三种币种查询按钮
+  document.querySelectorAll('.button-group button').forEach((btn) => {
+    const text = btn.textContent.toUpperCase();
+    if (['BTC','ETH','USDT'].includes(text)) {
+      btn.addEventListener('click', () => {
+        getTransactions(text);
+      });
+    }
+  });
+
+  // 1.2 绑定地址画像按钮
+  document.getElementById('addressProfileBtn').addEventListener('click', fetchAddressProfile);
+
+  // 1.3 绑定报告生成按钮
+  document.getElementById('generateReportBtn').addEventListener('click', generateReport);
+
+  // 1.4 若 URL 带有参数，则自动查询
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('address') && urlParams.has('currency')) {
+    document.getElementById('walletAddress').value = urlParams.get('address');
+    getTransactions(urlParams.get('currency').toUpperCase());
+  }
+});
+
+/* ==============================
+   2. 获取交易列表
+   ============================== */
+async function getTransactions(currency) {
+  const addressInput = document.getElementById('walletAddress');
+  const errorAlert = document.getElementById('errorAlert');
+  errorAlert.classList.add('hidden');
+
+  if (!addressInput.value.trim()) {
+    showAlert('Please enter a wallet address.');
+    return;
+  }
+
+  currentCurrency = currency;
+  currentAddress = addressInput.value.trim();
+  currentPage = 1;
+
+  showLoadingIndicator();
+
+  let apiUrl, apiFunction;
+  if (currency === 'BTC') {
+    apiUrl = `https://blockchain.info/rawaddr/${currentAddress}?cors=true`;
+    apiFunction = getBTCTransactions;
+  } else if (currency === 'ETH') {
+    apiUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${currentAddress}&startblock=0&endblock=99999999&sort=desc&apikey=${etherscanApiKey}`;
+    apiFunction = getETHTransactions;
+  } else if (currency === 'USDT') {
+    apiUrl = `https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=${usdtContractAddress}&address=${currentAddress}&page=1&offset=100&startblock=0&endblock=999999999&sort=desc&apikey=${etherscanApiKey}`;
+    apiFunction = getUSDTTransactions;
+  } else {
+    showAlert('Invalid currency selected.');
+    hideLoadingIndicator();
+    return;
+  }
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      const text = await response.text();
+      console.error('HTTP Error:', response.status, response.statusText, text);
+      showAlert(`Error: ${response.status} - ${response.statusText}. ${text}`);
+      hideLoadingIndicator();
+      return;
+    }
+    const data = await response.json();
+    console.log('Data received:', data);
+
+    currentTransactions = await apiFunction(data, currentAddress, currency);
+    totalPages = Math.ceil(currentTransactions.length / rowsPerPage);
+    displayPaginatedTransactions(currentPage);
+
+    // 生成 3D 与 Sankey 图
+    create3DPath(currentTransactions);
+    createSankeyDiagram(currentTransactions);
+  } catch (error) {
+    console.error('Error fetching transactions:', error);
+    showAlert('Error fetching transactions. Please check console.');
+  } finally {
+    hideLoadingIndicator();
+  }
+}
+
+/* ==============================
+   3. 各币种交易解析
+   ============================== */
+// 3.1 BTC 交易解析
+async function getBTCTransactions(data, address, currency) {
+  if (!data.txs || !Array.isArray(data.txs)) {
+    showAlert('No transactions found or invalid data format for BTC.');
+    return [];
+  }
+  const riskLabels = await checkRiskLabels(data.txs.map(tx => tx.hash), currency);
+
+  return data.txs.map((tx, idx) => {
+    let amount = 0;
+    let fromSet = new Set();
+    let toSet = new Set();
+    let fee = 0;
+
+    // inputs
+    tx.inputs.forEach(input => {
+      if (input.prev_out) {
+        fromSet.add(input.prev_out.addr);
+        if (input.prev_out.addr === address) {
+          amount -= input.prev_out.value;
+          fee += input.prev_out.value;
+        }
+      }
+    });
+    // out
+    tx.out.forEach(out => {
+      toSet.add(out.addr);
+      if (out.addr === address) {
+        amount += out.value;
+      }
+    });
+    fee = tx.inputs.reduce(
+      (sum, i) => sum + (i.prev_out ? i.prev_out.value : 0), 0
+    ) - tx.out.reduce((sum, o) => sum + o.value, 0);
+
+    return {
+      time: new Date(tx.time * 1000).toLocaleString(),
+      hash: tx.hash,
+      from: Array.from(fromSet).join(', '),
+      to: Array.from(toSet).join(', '),
+      amount: (amount / 1e8).toFixed(8) + ' BTC',
+      status: 'Confirmed',
+      fee: (fee / 1e8).toFixed(8) + ' BTC',
+      riskLabel: riskLabels[idx] || 'N/A'
+    };
+  });
+}
+
+// 3.2 ETH 交易解析
+async function getETHTransactions(data, address, currency) {
+  if (!data.result || !Array.isArray(data.result)) {
+    showAlert('No transactions found or invalid data format for ETH.');
+    return [];
+  }
+  const riskLabels = await checkRiskLabels(data.result.map(tx => tx.hash), currency);
+
+  return data.result.map((tx, idx) => ({
+    time: new Date(tx.timeStamp * 1000).toLocaleString(),
+    hash: tx.hash,
+    from: tx.from,
+    to: tx.to,
+    amount: (Number(tx.value) / 1e18).toFixed(6) + ' ETH',
+    status: tx.isError === '0' ? 'Confirmed' : 'Failed',
+    fee: ((Number(tx.gasUsed) * Number(tx.gasPrice)) / 1e18).toFixed(6) + ' ETH',
+    riskLabel: riskLabels[idx] || 'N/A'
+  }));
+}
+
+// 3.3 USDT 交易解析
+async function getUSDTTransactions(data, address, currency) {
+  if (!data.result || !Array.isArray(data.result)) {
+    showAlert('No transactions found or invalid data format for USDT.');
+    return [];
+  }
+  const riskLabels = await checkRiskLabels(data.result.map(tx => tx.hash), currency);
+
+  return data.result.map((tx, idx) => ({
+    time: new Date(tx.timeStamp * 1000).toLocaleString(),
+    hash: tx.hash,
+    from: tx.from,
+    to: tx.to,
+    amount: (Number(tx.value) / 1e6).toFixed(2) + ' USDT',
+    status: tx.confirmations > 0 ? 'Confirmed' : 'Pending',
+    fee: ((Number(tx.gasUsed) * Number(tx.gasPrice)) / 1e18).toFixed(6) + ' ETH',
+    riskLabel: riskLabels[idx] || 'N/A'
+  }));
+}
+
+/* ==============================
+   4. 风险标签示例 (Demo)
+   ============================== */
+async function checkRiskLabels(txHashes, currency) {
+  // 简单示例：根据hash最后一位判断高/中/低风险
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const labels = txHashes.map(hash => {
+        const lastDigit = parseInt(hash.slice(-1), 16);
+        if (lastDigit < 5) return 'High Risk';
+        else if (lastDigit < 10) return 'Medium Risk';
+        else return 'Low Risk';
+      });
+      resolve(labels);
+    }, 300);
+  });
+}
+
+/* ==============================
+   5. 表格分页展示
+   ============================== */
+function displayPaginatedTransactions(page) {
+  const tableBody = document.getElementById('transactionsTable').getElementsByTagName('tbody')[0];
+  tableBody.innerHTML = '';
+
+  const startIndex = (page - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const pagedData = currentTransactions.slice(startIndex, endIndex);
+
+  pagedData.forEach(tx => {
+    const row = tableBody.insertRow();
+    row.insertCell().textContent = tx.time;
+    row.insertCell().textContent = tx.hash;
+    row.insertCell().textContent = tx.from;
+    row.insertCell().textContent = tx.to;
+    row.insertCell().textContent = tx.amount;
+    row.insertCell().textContent = tx.status;
+    row.insertCell().textContent = tx.fee;
+    const riskCell = row.insertCell();
+    riskCell.textContent = tx.riskLabel;
+    if (tx.riskLabel === 'High Risk') {
+      riskCell.classList.add('risk-label');
+    }
+  });
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const paginationContainer = document.getElementById('paginationContainer');
+  paginationContainer.innerHTML = '';
+
+  if (currentTransactions.length === 0 || totalPages <= 1) {
+    return;
+  }
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    if (i === currentPage) {
+      btn.classList.add('active');
+    }
+    btn.addEventListener('click', () => {
+      currentPage = i;
+      displayPaginatedTransactions(currentPage);
+    });
+    paginationContainer.appendChild(btn);
+  }
+}
+
+/* ==============================
+   6. 创建 3D 和 Sankey 可视化
+   ============================== */
+// 3D 图
+function create3DPath(transactions) {
+  let nodeX = [], nodeY = [], nodeZ = [];
+  let edgeX = [], edgeY = [], edgeZ = [];
+  let nodeLabels = [], nodeColors = [];
+  let addressIndexMap = new Map();
+  let idx = 0;
+
+  transactions.forEach(tx => {
+    [tx.from, tx.to].forEach(addrGroup => {
+      addrGroup.split(', ').forEach(addr => {
+        if (!addressIndexMap.has(addr)) {
+          addressIndexMap.set(addr, idx++);
+          nodeX.push(Math.random());
+          nodeY.push(Math.random());
+          nodeZ.push(Math.random());
+          nodeLabels.push(addr);
+          nodeColors.push(
+            addr === currentAddress
+              ? document.getElementById('myNodeColor').value
+              : document.getElementById('nodeColor').value
+          );
+        }
+      });
+    });
+
+    const fromAddrs = tx.from.split(', ');
+    const toAddrs = tx.to.split(', ');
+    fromAddrs.forEach(f => {
+      toAddrs.forEach(t => {
+        let fi = addressIndexMap.get(f);
+        let ti = addressIndexMap.get(t);
+        edgeX.push(nodeX[fi], nodeX[ti], null);
+        edgeY.push(nodeY[fi], nodeY[ti], null);
+        edgeZ.push(nodeZ[fi], nodeZ[ti], null);
+      });
+    });
+  });
+
+  const nodeTrace = {
+    x: nodeX,
+    y: nodeY,
+    z: nodeZ,
+    mode: 'markers+text',
+    type: 'scatter3d',
+    text: nodeLabels,
+    textposition: 'top center',
+    marker: { size: 12, color: nodeColors, opacity: 0.8 },
+    name: 'Nodes'
+  };
+  const edgeTrace = {
+    x: edgeX,
+    y: edgeY,
+    z: edgeZ,
+    mode: 'lines',
+    type: 'scatter3d',
+    line: { color: document.getElementById('edgeColor').value, width: 2 },
+    hoverinfo: 'none',
+    name: 'Edges'
+  };
+  const layout = {
+    margin: { l:0, r:0, b:0, t:0 },
+    scene: {
+      xaxis: { showticklabels:false, showbackground:false, zeroline:false },
+      yaxis: { showticklabels:false, showbackground:false, zeroline:false },
+      zaxis: { showticklabels:false, showbackground:false, zeroline:false }
+    },
+    showlegend: false
+  };
+  plotlyGraphObject = { data: [nodeTrace, edgeTrace], layout };
+  Plotly.newPlot('pathContainer', [nodeTrace, edgeTrace], layout);
+
+  // 在桌面端默认显示，移动端可通过按钮切换
+  document.getElementById('pathContainer').style.display = 'block';
+  document.getElementById('togglePathButton').style.display = 'block';
+}
+
+// Sankey 图
+function createSankeyDiagram(transactions) {
+  let linkMap = new Map(); 
+  transactions.forEach(tx => {
+    const fromAddrs = tx.from.split(', ');
+    const toAddrs = tx.to.split(', ');
+    fromAddrs.forEach(f => {
+      toAddrs.forEach(t => {
+        const key = f + '->' + t;
+        if (!linkMap.has(key)) {
+          linkMap.set(key, 0);
+        }
+        // Demo：每出现一次流动就 +1
+        linkMap.set(key, linkMap.get(key) + 1);
+      });
+    });
+  });
+
+  let allNodes = new Set();
+  linkMap.forEach((val, key) => {
+    const [f, t] = key.split('->');
+    allNodes.add(f);
+    allNodes.add(t);
+  });
+  const nodeArr = Array.from(allNodes);
+  const nodeIndex = new Map(nodeArr.map((n, i) => [n, i]));
+
+  const sankeyLinks = [];
+  linkMap.forEach((val, key) => {
+    const [f, t] = key.split('->');
+    sankeyLinks.push({
+      source: nodeIndex.get(f),
+      target: nodeIndex.get(t),
+      value: val
+    });
+  });
+
+  const data = {
+    type: 'sankey',
+    orientation: 'h',
+    node: {
+      pad: 15,
+      thickness: 20,
+      line: { color: 'black', width: 0.5 },
+      label: nodeArr
+    },
+    link: {
+      source: sankeyLinks.map(l => l.source),
+      target: sankeyLinks.map(l => l.target),
+      value: sankeyLinks.map(l => l.value)
+    }
+  };
+  const layout = {
+    margin: { l:10, r:10, t:10, b:10 },
+    title: 'Sankey Diagram of Transactions',
+    font: { size: 12 }
+  };
+  Plotly.newPlot('sankeyContainer', [data], layout);
+}
+
+/* ==============================
+   7. 移动端显示/隐藏 3D 图
+   ============================== */
+function togglePathVisualization() {
+  const pathContainer = document.getElementById('pathContainer');
+  pathContainer.style.display =
+    pathContainer.style.display === 'none' ? 'block' : 'none';
+}
+
+/* ==============================
+   8. 自定义颜色更新
+   ============================== */
+function updateGraphAppearance() {
+  if (!plotlyGraphObject) return;
+  const newNodeColor = document.getElementById('nodeColor').value;
+  const newMyNodeColor = document.getElementById('myNodeColor').value;
+  const newEdgeColor = document.getElementById('edgeColor').value;
+
+  plotlyGraphObject.data[0].marker.color =
+    plotlyGraphObject.data[0].text.map(addr =>
+      addr === currentAddress ? newMyNodeColor : newNodeColor
+    );
+  plotlyGraphObject.data[1].line.color = newEdgeColor;
+
+  Plotly.react('pathContainer', plotlyGraphObject.data, plotlyGraphObject.layout);
+}
+
+/* ==============================
+   9. 地址画像与风险评分
+   ============================== */
+function fetchAddressProfile() {
+  if (!currentAddress) {
+    showAlert('Please fetch some transactions first.');
+    return;
+  }
+
+  const profilePanel = document.getElementById('addressProfilePanel');
+  const profileInfo = document.getElementById('profileInfo');
+  profilePanel.style.display = 'block';
+
+  // 随机生成测试数据
+  let topPartners = ['0xAAA123', '0xBBB456', '0xCCC789', '0xDDD000'];
+  let distribution = {
+    small: Math.floor(Math.random() * 20),
+    medium: Math.floor(Math.random() * 15),
+    large: Math.floor(Math.random() * 8)
+  };
+  let riskScore = Math.floor(Math.random() * 100) + 1;
+
+  let riskLevel = 'Low';
+  if (riskScore > 80) riskLevel = 'High';
+  else if (riskScore > 50) riskLevel = 'Medium';
+
+  let html = `
+    <div><strong>Wallet:</strong> ${currentAddress}</div>
+    <div><strong>Top Partner Addresses:</strong> ${topPartners.join(', ')}</div>
+    <div><strong>Tx Distribution:</strong> Small(${distribution.small}), Medium(${distribution.medium}), Large(${distribution.large})</div>
+    <div><strong>Risk Score:</strong> ${riskScore} / 100</div>
+    <div><strong>Risk Level:</strong> ${riskLevel}</div>
+  `;
+  profileInfo.innerHTML = html;
+}
+
+/* ==============================
+   10. 取证报告生成
+   ============================== */
+function generateReport() {
+  if (!currentAddress || currentTransactions.length === 0) {
+    showAlert('No transaction data available for report.');
+    return;
+  }
+
+  const profilePanel = document.getElementById('profileInfo');
+  const profileText = profilePanel ? profilePanel.innerText : 'No profile info';
+
+  let sampleTxInfo = '';
+  currentTransactions.slice(0, 10).forEach((tx, i) => {
+    sampleTxInfo += `[${i+1}] Time: ${tx.time}, From: ${tx.from}, To: ${tx.to}, Amount: ${tx.amount}, Fee: ${tx.fee}, Risk: ${tx.riskLabel}\n`;
+  });
+
+  let reportContent = `=== Investigation Report ===\n\n`;
+  reportContent += `Address: ${currentAddress}\n`;
+  reportContent += `Currency: ${currentCurrency}\n`;
+  reportContent += `Total Transactions: ${currentTransactions.length}\n\n`;
+  reportContent += `--- Address Profile & Risk ---\n${profileText}\n\n`;
+  reportContent += `--- Transactions (first 10) ---\n${sampleTxInfo}\n\n`;
+  reportContent += `--- Recommendation ---\n`;
+  reportContent += `1. Keep track of suspicious addresses.\n`;
+  reportContent += `2. If fraudulent activity is confirmed, consider reporting to relevant authorities.\n`;
+
+  const reportContainer = document.getElementById('reportContainer');
+  const reportOutput = document.getElementById('reportOutput');
+  reportContainer.style.display = 'block';
+  reportOutput.textContent = reportContent;
+}
+
+/* ==============================
+   11. 通用函数
+   ============================== */
+function showAlert(message) {
+  const alertDiv = document.getElementById('errorAlert');
+  alertDiv.textContent = message;
+  alertDiv.classList.remove('hidden');
+}
+
+function showLoadingIndicator() {
+  document.getElementById('loadingIndicator').style.display = 'block';
+  document.getElementById('loadingOverlay').style.display = 'block';
+}
+
+function hideLoadingIndicator() {
+  document.getElementById('loadingIndicator').style.display = 'none';
+  document.getElementById('loadingOverlay').style.display = 'none';
+}
+</script>
+</body>
+</html>
