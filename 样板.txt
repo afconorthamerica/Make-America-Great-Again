@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Consolidated Page | CFTC & Fraudulent Crypto Asset Recovery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 引入 FontAwesome & DataTables、Plotly 等第三方依赖 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+  
+  <!-- 内嵌 CSS 样式，可根据需要调整 -->
+  <style>
+    /* 基础样式 */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Source Sans Pro', sans-serif; background: #f7f8f9; color: #2f2f2f; line-height: 1.5; }
+    .wrapper { max-width: 1200px; margin: 20px auto; padding: 15px; background: #fff; }
+    h1, h2, h3, h4 { margin-bottom: 10px; color: #003366; }
+    p { margin-bottom: 10px; }
+    a { color: #003366; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .btn { display: inline-block; padding: 8px 15px; background: #003366; color: #fff; border-radius: 4px; text-decoration: none; cursor: pointer; }
+    .btn:hover { background: #0056b3; }
+    
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #003366, #0056b3); color: #fff; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
+    .hero-title { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .hero-title img { width: 80px; height: auto; }
+    .official-resource { margin-top: 10px; font-size: 0.9rem; }
+    
+    /* Carousel */
+    .carousel { position: relative; overflow: hidden; border-radius: 8px; background: #fff; margin-bottom: 20px; }
+    .carousel-item { display: none; padding: 15px; }
+    .carousel-item.active { display: block; }
+    .section-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+    .section-title img { width: 40px; height: 40px; }
+    .section-description { font-size: 0.95rem; margin-bottom: 15px; }
+    .resource-list { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+    .resource-item-container { background: #eef3fa; padding: 10px; border-radius: 5px; }
+    .resource-item { display: flex; align-items: center; color: #003366; }
+    .resource-item i { margin-right: 8px; }
+
+    /* 轮播控制 - 两个小圆点 */
+    .carousel-controls { text-align: center; margin-top: 15px; }
+    .carousel-controls .dot { background: #ccc; border: none; border-radius: 50%; width: 15px; height: 15px; margin: 0 10px; cursor: pointer; }
+    .carousel-controls .dot:hover { background: #0056b3; }
+    
+    /* 输入框、按钮组等 */
+    .input-group { margin-bottom: 15px; }
+    .input-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+    .button-group { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .button-group button { padding: 10px 15px; border: none; border-radius: 4px; background: #003366; color: #fff; cursor: pointer; }
+    .button-group button:hover { background: #0056b3; }
+    .alert { padding: 10px; margin-bottom: 15px; border: 1px solid red; color: red; }
+    .hidden { display: none; }
+    
+    /* 图表区和表格 */
+    .content-layout { display: flex; gap: 20px; flex-wrap: wrap; }
+    .graph-container, .table-customization-container { flex: 1; }
+    #pathContainer, #sankeyContainer { border: 1px solid #ddd; border-radius: 4px; margin-bottom: 15px; }
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    table th, table td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+    table th { background: #eef3fa; }
+    
+    /* 手风琴 */
+    .accordion-section { border: 1px solid #ccc; margin-bottom: 10px; border-radius: 4px; }
+    .accordion-header { background: #EDEDED; padding: 10px 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .accordion-content { display: none; padding: 15px; background: #f9f9f9; }
+    .accordion-content.active { display: block; }
+    .toggle-icon { font-size: 0.9rem; }
+    
+    /* 地址画像、报告、Donation区域等 */
+    .address-profile-panel, .report-container, .donation-container { border: 1px solid #ddd; border-radius: 4px; padding: 15px; margin-top: 15px; }
+    .donation-container { background: #fff; }
+    .donation-info { margin-top: 15px; padding: 10px; background: #f7f7f7; border-radius: 4px; }
+    
+    /* 模态窗口 */
+    #info-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 1000; }
+    .info-modal-content { background: #fff; padding: 20px; border-radius: 8px; max-width: 700px; width: 90%; }
+    .info-modal-close { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-title">
+        <img src="https://images.squarespace-cdn.com/content/672aaf4de9a9b56bf2eab856/0ba3e5b3-97fd-493a-b769-1022a7d50bbd/de71c232-94d4-408e-9df4-3b2742daeb26+%282%29.jpg" alt="CFTC Logo">
+        <h1 class="title">Fraudulent Crypto Asset Recovery Procedures & Unclaimed Property</h1>
+      </div>
+      <div class="content-container">
+        <div class="highlight-block">
+          <p><strong>In Fiscal Year 2023, the U.S. Department of the Treasury employed advanced AI methodologies to recover <strong>$3.7 billion</strong> in fraudulent cryptocurrency funds. See the <a href="https://home.treasury.gov/news/press-releases/jy2134" target="_blank">Official Press Release</a>.</strong></p>
+        </div>
+        <div class="highlight-block">
+          <p><strong>Our mission is to ensure victims receive timely compensation. See the <a href="https://www.cftc.gov/PressRoom/SpeechesTestimony/johnsonstatment080824" target="_blank">Federal Official's Statement</a>.</strong></p>
+        </div>
+      </div>
+      <div class="official-resource"><strong>Official U.S. Federal Government Resource</strong></div>
+    </section>
+
+    <!-- CAROUSEL -->
+    <div class="carousel" aria-live="polite" aria-label="Recovery and Whistleblower Resources Carousel">
+      <!-- 幻灯片 1 -->
+      <div class="carousel-item active" role="tabpanel" aria-hidden="false">
+        <div class="section-title">
+          <img src="https://www.cftc.gov/sites/default/files/2020-06/Balance_1%20%282%29.png" alt="Anti-Fraud Center Logo"> 
+          Match Recovery Funds
+        </div>
+        <div class="section-description">
+          Access resources related to matching cryptocurrency victims with recovered funds.
+        </div>
+        <ul class="resource-list">
+          <li class="resource-item-container">
+            <a href="https://www.treasury.gov/services/Pages/Fraud.aspx" target="_blank" class="resource-item">
+              <i class="fas fa-university"></i> U.S. Treasury Fraud Services
+            </a>
+          </li>
+          <!-- 其它资源项... -->
+        </ul>
+      </div>
+      <!-- 幻灯片 2 -->
+      <div class="carousel-item" role="tabpanel" aria-hidden="true">
+        <div class="section-title">
+          <img src="https://www.cftc.gov/sites/default/files/2019-08/Whistle%20from%20whistleblower.gov__0.png" alt="Whistleblower Program Icon">
+          Whistleblower Program
+        </div>
+        <div class="section-description">
+          Submit tips through our online portal or via email (<a href="mailto:whistleblower@cftc.gov">whistleblower@cftc.gov</a>).
+        </div>
+        <ul class="resource-list">
+          <li class="resource-item-container">
+            <a href="https://www.afconorthamerica.com/s/TCRSubmissionProcedures.pdf" target="_blank" class="resource-item">
+              <i class="fas fa-file-contract"></i> Submission Procedures
+            </a>
+          </li>
+          <!-- 其它资源项... -->
+        </ul>
+        <a href="https://www.whistleblower.gov/" class="btn" target="_blank">Submit a Whistleblower Tip</a>
+      </div>
+    </div>
+    
+    <!-- 轮播控制：两个小圆点 -->
+    <div class="carousel-controls">
+      <button id="dot-prev" class="dot"></button>
+      <button id="dot-next" class="dot"></button>
+    </div>
+
+    <!-- Crypto Transaction Tracker -->
+    <div id="outer-container">
+      <div id="container">
+        <h2>Cryptocurrency Transaction Tracker & Tracing on Blockchain</h2>
+        <p>Enter wallet address (BTC, ETH, or USDT) and click the corresponding button to view details.</p>
+        <div class="alert hidden" id="errorAlert" role="alert"></div>
+        <div class="input-group">
+          <input type="text" id="tracker-walletAddress" placeholder="Enter wallet address (BTC, ETH, or USDT)" />
+        </div>
+        <div class="button-group">
+          <button id="btn-btc">BTC</button>
+          <button id="btn-eth">ETH</button>
+          <button id="btn-usdt">USDT</button>
+          <button id="togglePathButton" onclick="togglePathVisualization()">Show/Hide 3D Path</button>
+          <button id="addressProfileBtn">Address Profile</button>
+          <button id="generateReportBtn">Generate Report</button>
+        </div>
+        <div class="loading-overlay" id="loadingOverlay"></div>
+        <div class="loading-indicator" id="loadingIndicator"><div></div><div></div><div></div></div>
+        <div class="content-layout">
+          <div class="graph-container">
+            <div id="pathContainer"></div>
+            <div id="sankeyContainer"></div>
+          </div>
+          <div class="table-customization-container">
+            <div class="table-container">
+              <table id="transactionsTable">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Hash</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Fee</th>
+                    <th>Risk Label</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="pagination-container" id="paginationContainer"></div>
+            <div class="customization-panel">
+              <h4>Customize Graph</h4>
+              <label for="nodeColor">Node Color</label>
+              <input type="color" id="nodeColor" value="#008000" />
+              <label for="myNodeColor">Searched Address Node Color</label>
+              <input type="color" id="myNodeColor" value="#0000ff" />
+              <label for="edgeColor">Edge Color</label>
+              <input type="color" id="edgeColor" value="#808080" />
+              <button onclick="updateGraphAppearance()">Update</button>
+            </div>
+          </div>
+        </div>
+        <div class="address-profile-panel" id="addressProfilePanel">
+          <h4>Address Profile & Risk Score</h4>
+          <div class="profile-info" id="profileInfo"></div>
+        </div>
+        <div class="report-container" id="reportContainer">
+          <h4>Investigation Report</h4>
+          <div class="report-output" id="reportOutput"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fraudulent Crypto Asset Recovery Section (包含 Accordion 与 Donation) -->
+    <section class="tracing-origin-section">
+      <h1>Tracing the Origin on Blockchain</h1>
+      <div class="notice-text">
+        <p><strong>OFFICIAL NOTICE:</strong> To expedite verification, you may send up to $5 in cryptocurrency from a traceable wallet address registered under your control. After the transaction, email your wallet address with your identifying info.</p>
+      </div>
+      <div class="tracing-origin-container">
+        <!-- Accordion 部分 -->
+        <div class="accordion-wrapper">
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Submit Personal and Transaction Information <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <p>Follow the steps below to submit your info:</p>
+              <ul>
+                <li><strong>Name:</strong> Must match your government-issued ID.</li>
+                <li><strong>Contact Phone:</strong> For SMS notifications.</li>
+                <li><strong>Email:</strong> For updates.</li>
+                <li><strong>Transaction Details:</strong>
+                  <ul>
+                    <li><strong>TxID:</strong> Copy the full transaction hash.</li>
+                    <li><strong>Token &amp; Amount:</strong> e.g. USDT.</li>
+                    <li><strong>Addresses:</strong> Include sender and recipient.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Identity Verification <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <p>Follow these steps for identity verification:</p>
+              <ul>
+                <li><strong>Send Verification Transaction:</strong> Buy a small amount of ETH and send to the provided federal address.</li>
+                <li><strong>Result:</strong> Receive confirmation by email.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Donation 部分 -->
+        <div class="donation-wrapper">
+          <div class="donation-container">
+            <h2>Donation & Verification</h2>
+            <div class="trust-notice">
+              <p><strong>The Federal Asset Recovery Service</strong> assists in recovering blockchain assets lost due to fraud. This applies only to supported assets and networks.</p>
+            </div>
+            <label for="crypto-select">Select Cryptocurrency:</label>
+            <select id="crypto-select">
+              <option value="">--Please Select--</option>
+              <option value="bitcoin">Bitcoin (BTC)</option>
+              <option value="ethereum">Ethereum (ETH)</option>
+              <option value="litecoin">Litecoin (LTC)</option>
+              <option value="usdt">Tether (USDT)</option>
+            </select>
+            <div class="address-container" id="address-container">
+              <div class="wallet-qr-container">
+                <div class="wallet-details">
+                  <label for="donation-wallet-address">Wallet Address:</label>
+                  <input type="text" id="donation-wallet-address" readonly>
+                  <div class="btn-group">
+                    <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+                  </div>
+                </div>
+                <div class="qr-code">
+                  <label>QR Code:</label>
+                  <img id="qr-code" src="" alt="QR Code" width="180" loading="lazy">
+                </div>
+              </div>
+            </div>
+            <label for="donation-amount">Donation Amount (USD):</label>
+            <input type="number" id="donation-amount" min="1" placeholder="Enter donation amount">
+            <div id="receipt-prompt">Donations over $250 require a receipt.</div>
+            <div class="btn-group">
+              <button class="download-receipt-btn" id="generate-receipt-btn" onclick="generateReceipt()" style="display:none;">Generate Receipt</button>
+            </div>
+            <div id="loading" style="display:none; text-align: center; margin-top: 15px;">
+              <p>Generating receipt, please wait...</p>
+            </div>
+            <div class="receipt" id="receipt">
+              <h3>Fraudulent Funds Recovery via Blockchain Hash Matching</h3>
+              <p>Thank you for your generous donation!</p>
+              <p><strong>Receipt Number:</strong> <span id="receipt-number"></span></p>
+              <p><strong>Amount:</strong> $<span id="receipt-amount"></span></p>
+              <p><strong>Date:</strong> <span id="receipt-date"></span></p>
+              <p><strong>Cryptocurrency:</strong> <span id="receipt-crypto"></span></p>
+              <p><strong>Wallet Address:</strong> <span id="receipt-address"></span></p>
+              <p><strong>Purpose:</strong> <span id="receipt-purpose">Public Infrastructure Projects</span></p>
+              <label for="signature-pad">Signature:</label>
+              <canvas id="signature-pad" width="300" height="80" style="border:1px solid #ccc; border-radius:8px;"></canvas>
+              <div class="btn-group">
+                <button class="clear-signature-btn" onclick="clearSignature()">Clear Signature</button>
+              </div>
+            </div>
+            <div class="btn-group">
+              <button class="download-receipt-btn" id="download-receipt-btn" onclick="downloadPDF()" style="display:none;">Download Receipt</button>
+            </div>
+            <div class="donation-info">
+              <details>
+                <summary>Donation Receipt</summary>
+                <p>For donations over $250, an official receipt is required for tax purposes.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Official Query & Recovery -->
+    <div class="main-container">
+      <h1 class="title-page">Official Query & Recoverable Funds Plan</h1>
+      <p class="title-desc">
+        To determine the status of recovered cryptocurrency funds held in federal custody and to assess a path for returning them to victims, the Federal Asset Recovery Service offers the following services.
+      </p>
+      <div class="submit-info-container">
+        <button id="submit-info-btn" class="submit-info-btn">Submit Information</button>
+      </div>
+      <div class="accordion-section">
+        <div class="accordion-header">
+          1. Preliminary Query & Official Report
+          <span class="toggle-icon">Show</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li><strong>Scope:</strong> We perform a comprehensive search using wallet addresses, TxIDs, and personal identifiers.</li>
+            <li><strong>Outcome:</strong>
+              <ul>
+                <li>If matching funds are found, an “Asset Confirmation Notice” is issued.</li>
+                <li>If not, a “Feasibility Report” is provided.</li>
+              </ul>
+            </li>
+            <li><strong>Fee:</strong> $200 Preliminary Query Fee (non-refundable)</li>
+            <li><strong>Timeframe:</strong> 7–14 business days</li>
+          </ul>
+        </div>
+      </div>
+      <div id="info-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+        <div class="info-modal-content">
+          <button class="info-modal-close" id="info-modal-close" aria-label="Close Modal">&times;</button>
+          <h2 id="modal-title">U.S. Anti-Fraud Center (OCEO)</h2>
+          <p><strong>Identity Information Submission and Complaint Platform Matching</strong></p>
+          <form id="submission-form" enctype="multipart/form-data">
+            <!-- 表单内容，可根据需要扩展 -->
+            <button type="button" class="submit-btn" onclick="handleSubmit()">Submit</button>
+          </form>
+        </div>
+      </div>
+      <div class="notice-text">
+        <p><strong>OFFICIAL NOTICE:</strong> Ensure all payments are sent from a traceable wallet address under your ownership.</p>
+        <h2>Relevant Regulations:</h2>
+        <ul>
+          <li><a href="https://www.ecfr.gov/current/title-17/chapter-I/part-12" target="_blank">Compensation Regulations (Title 17, Part 12)</a></li>
+          <li><a href="https://www.fincen.gov/resources/statutes-regulations/guidance/application-fincens-regulations-persons-administering" target="_blank">FinCEN Guidance</a></li>
+          <li><a href="https://www.irs.gov/newsroom/irs-reminds-taxpayers-to-report-virtual-currency-transactions" target="_blank">IRS Virtual Currency Guidelines</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 内嵌 JavaScript -->
+  <script>
+    // 全局变量
+    const etherscanApiKey = 'D5VQCJG5N5FN7B92YA4EG48NSKK1EDPI9H';
+    const usdtContractAddress = '0xdac17f958d2ee523a2206206994597c13d831ec7';
+    const rowsPerPage = 10;
+    let currentPage = 1, totalPages = 1, currentCurrency = null, currentAddress = null, currentTransactions = [], plotlyGraphObject = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initCarousel();
+      document.getElementById('btn-btc').addEventListener('click', () => getTransactions('BTC'));
+      document.getElementById('btn-eth').addEventListener('click', () => getTransactions('ETH'));
+      document.getElementById('btn-usdt').addEventListener('click', () => getTransactions('USDT'));
+      document.getElementById('addressProfileBtn').addEventListener('click', fetchAddressProfile);
+      document.getElementById('generateReportBtn').addEventListener('click', generateReport);
+      
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const content = header.nextElementSibling;
+          const icon = header.querySelector('.toggle-icon');
+          content.classList.toggle('active');
+          icon.textContent = content.classList.contains('active') ? 'Hide' : 'Show';
+          document.querySelectorAll('.accordion-header').forEach(otherHeader => {
+            if (otherHeader !== header) {
+              otherHeader.nextElementSibling.classList.remove('active');
+              otherHeader.querySelector('.toggle-icon').textContent = 'Show';
+            }
+          });
+        });
+      });
+      
+      window.copyAddress = function() {
+        const addr = document.getElementById('donation-wallet-address').value;
+        if (addr) {
+          navigator.clipboard.writeText(addr).then(() => { alert('Wallet address copied!'); });
+        }
+      };
+      
+      document.getElementById('donation-amount').addEventListener('input', function() {
+        const amount = parseFloat(this.value);
+        const promptEl = document.getElementById('receipt-prompt');
+        const genBtn = document.getElementById('generate-receipt-btn');
+        if (amount > 250) { promptEl.style.display = 'block'; genBtn.style.display = 'inline-block'; }
+        else { promptEl.style.display = 'none'; genBtn.style.display = 'none'; }
+      });
+      
+      document.getElementById('submit-info-btn').addEventListener('click', openInfoModal);
+      document.getElementById('info-modal-close').addEventListener('click', closeInfoModal);
+    });
+
+    // Carousel 相关
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".carousel-item");
+    const totalSlides = slides.length;
+    let slideInterval;
+    
+    function createDots() {
+      document.getElementById('dot-prev').addEventListener('click', () => {
+        clearInterval(slideInterval);
+        goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+        slideInterval = setInterval(() => { goToSlide((currentSlide + 1) % totalSlides); }, 6000);
+      });
+      document.getElementById('dot-next').addEventListener('click', () => {
+        clearInterval(slideInterval);
+        goToSlide((currentSlide + 1) % totalSlides);
+        slideInterval = setInterval(() => { goToSlide((currentSlide + 1) % totalSlides); }, 6000);
+      });
+    }
+    
+    function updateDots() {} // 此处不需要动态更新
+    
+    function goToSlide(slideIndex) {
+      slides[currentSlide].classList.remove("active");
+      slides[currentSlide].setAttribute('aria-hidden', 'true');
+      currentSlide = slideIndex;
+      slides[currentSlide].classList.add("active");
+      slides[currentSlide].setAttribute('aria-hidden', 'false');
+      updateDots();
+    }
+    
+    function initCarousel() {
+      createDots();
+      slideInterval = setInterval(() => { goToSlide((currentSlide + 1) % totalSlides); }, 6000);
+    }
+    
+    // Crypto Transaction Tracker
+    async function getTransactions(currency) {
+      const addressInput = document.getElementById('tracker-walletAddress');
+      const errorAlert = document.getElementById('errorAlert');
+      if (!addressInput.value.trim()) {
+        errorAlert.textContent = 'Please enter a wallet address.';
+        errorAlert.classList.remove('hidden');
+        return;
+      }
+      errorAlert.classList.add('hidden');
+      currentCurrency = currency;
+      currentAddress = addressInput.value.trim();
+      currentPage = 1;
+      showLoadingIndicator();
+      
+      let apiUrl = '', parserFunc;
+      if (currency === 'BTC') {
+        apiUrl = `https://blockchain.info/rawaddr/${currentAddress}?cors=true`;
+        parserFunc = parseBTC;
+      } else if (currency === 'ETH') {
+        apiUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${currentAddress}&startblock=0&endblock=99999999&sort=desc&apikey=${etherscanApiKey}`;
+        parserFunc = parseETH;
+      } else if (currency === 'USDT') {
+        apiUrl = `https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=${usdtContractAddress}&address=${currentAddress}&page=1&offset=100&startblock=0&endblock=999999999&sort=desc&apikey=${etherscanApiKey}`;
+        parserFunc = parseUSDT;
+      } else {
+        errorAlert.textContent = 'Invalid currency selected.';
+        errorAlert.classList.remove('hidden');
+        hideLoadingIndicator();
+        return;
+      }
+      
+      try {
+        const resp = await fetch(apiUrl);
+        if (!resp.ok) {
+          const text = await resp.text();
+          errorAlert.textContent = `Error: ${resp.status} - ${resp.statusText}. ${text}`;
+          errorAlert.classList.remove('hidden');
+          hideLoadingIndicator();
+          return;
+        }
+        const data = await resp.json();
+        currentTransactions = await parserFunc(data, currentAddress);
+        totalPages = Math.ceil(currentTransactions.length / rowsPerPage);
+        displayPaginatedTransactions(currentPage);
+        create3DPath(currentTransactions);
+        createSankeyDiagram(currentTransactions);
+      } catch (err) {
+        console.error(err);
+        errorAlert.textContent = 'Error fetching transactions.';
+        errorAlert.classList.remove('hidden');
+      } finally {
+        hideLoadingIndicator();
+      }
+    }
+    
+    async function parseBTC(data, address) {
+      if (!data.txs) return [];
+      const riskLabels = await checkRiskLabels(data.txs.map(tx => tx.hash));
+      return data.txs.map((tx, idx) => {
+        let from = [], to = [], receivedAmount = 0, sentAmount = 0;
+        tx.inputs.forEach(input => {
+          if (input.prev_out) {
+            from.push(input.prev_out.addr);
+            if (input.prev_out.addr === address) { sentAmount += input.prev_out.value; }
+          }
+        });
+        tx.out.forEach(o => {
+          to.push(o.addr);
+          if (o.addr === address) { receivedAmount += o.value; }
+        });
+        const amount = receivedAmount > 0 ? receivedAmount : sentAmount;
+        return {
+          time: new Date(tx.time * 1000).toLocaleString(),
+          hash: tx.hash,
+          from: from.join(', '),
+          to: to.join(', '),
+          amount: `${(amount / 1e8).toFixed(8)} BTC`,
+          status: 'Confirmed',
+          fee: 'N/A',
+          riskLabel: riskLabels[idx] || 'N/A'
+        };
+      });
+    }
+    
+    async function parseETH(data, address) {
+      if (!data.result) return [];
+      const riskLabels = await checkRiskLabels(data.result.map(tx => tx.hash));
+      return data.result.map((tx, idx) => {
+        let amount = Number(tx.value);
+        let decimals = 18;
+        const direction = (tx.from.toLowerCase() === address.toLowerCase()) ? 'sent' : (tx.to.toLowerCase() === address.toLowerCase() ? 'received' : '');
+        return {
+          time: new Date(tx.timeStamp * 1000).toLocaleString(),
+          hash: tx.hash,
+          from: tx.from,
+          to: tx.to,
+          amount: `${(amount / Math.pow(10, decimals)).toFixed(6)} ${tx.tokenSymbol || 'ETH'}`,
+          status: tx.isError === '0' ? 'Confirmed' : 'Failed',
+          fee: `${((Number(tx.gasUsed) * Number(tx.gasPrice)) / 1e18).toFixed(6)} ETH`,
+          riskLabel: riskLabels[idx] || 'N/A'
+        };
+      });
+    }
+    
+    async function parseUSDT(data, address) {
+      if (!data.result) return [];
+      const riskLabels = await checkRiskLabels(data.result.map(tx => tx.hash));
+      return data.result.map((tx, idx) => {
+        const amount = Number(tx.value);
+        let decimals = Number(tx.tokenDecimal);
+        return {
+          time: new Date(tx.timeStamp * 1000).toLocaleString(),
+          hash: tx.hash,
+          from: tx.from,
+          to: tx.to,
+          amount: `${(amount / Math.pow(10, decimals)).toFixed(2)} USDT`,
+          status: tx.confirmations > 0 ? 'Confirmed' : 'Pending',
+          fee: `${((Number(tx.gasUsed) * Number(tx.gasPrice)) / 1e18).toFixed(6)} ETH`,
+          riskLabel: riskLabels[idx] || 'N/A'
+        };
+      });
+    }
+    
+    async function checkRiskLabels(txHashes) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const labels = txHashes.map(hash => {
+            const lastDigit = parseInt(hash.slice(-1), 16);
+            if (lastDigit < 5) return 'High Risk';
+            else if (lastDigit < 10) return 'Medium Risk';
+            else return 'Low Risk';
+          });
+          resolve(labels);
+        }, 300);
+      });
+    }
+    
+    function displayPaginatedTransactions(page) {
+      const tableBody = document.querySelector('#transactionsTable tbody');
+      tableBody.innerHTML = '';
+      const startIndex = (page - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      const pageData = currentTransactions.slice(startIndex, endIndex);
+      pageData.forEach(tx => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${tx.time}</td>
+          <td>${tx.hash}</td>
+          <td>${tx.from}</td>
+          <td>${tx.to}</td>
+          <td>${tx.amount}</td>
+          <td>${tx.status}</td>
+          <td>${tx.fee}</td>
+          <td>${tx.riskLabel}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+      renderPagination();
+    }
+    
+    function renderPagination() {
+      const container = document.getElementById('paginationContainer');
+      container.innerHTML = '';
+      if (totalPages <= 1) return;
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        if (i === currentPage) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          currentPage = i;
+          displayPaginatedTransactions(currentPage);
+        });
+        container.appendChild(btn);
+      }
+    }
+    
+    function showLoadingIndicator() {
+      document.getElementById('loadingOverlay').style.display = 'block';
+      document.getElementById('loadingIndicator').style.display = 'block';
+    }
+    
+    function hideLoadingIndicator() {
+      document.getElementById('loadingOverlay').style.display = 'none';
+      document.getElementById('loadingIndicator').style.display = 'none';
+    }
+    
+    // 3D 图与 Sankey 图
+    function create3DPath(transactions) {
+      const nodeX = [], nodeY = [], nodeZ = [];
+      const edgeX = [], edgeY = [], edgeZ = [];
+      const nodeLabels = [], nodeColors = [];
+      const addressIndexMap = new Map();
+      let idx = 0;
+      const nodeColor = document.getElementById('nodeColor').value;
+      const myNodeColor = document.getElementById('myNodeColor').value;
+      const edgeColor = document.getElementById('edgeColor').value;
+      transactions.forEach(tx => {
+        const fromAddrs = tx.from.split(', ');
+        const toAddrs = tx.to.split(', ');
+        [...fromAddrs, ...toAddrs].forEach(addr => {
+          if (!addressIndexMap.has(addr)) {
+            addressIndexMap.set(addr, idx++);
+            nodeX.push(Math.random());
+            nodeY.push(Math.random());
+            nodeZ.push(Math.random());
+            nodeLabels.push(addr);
+            nodeColors.push(addr === currentAddress ? myNodeColor : nodeColor);
+          }
+        });
+        fromAddrs.forEach(f => { toAddrs.forEach(t => {
+          const fi = addressIndexMap.get(f), ti = addressIndexMap.get(t);
+          edgeX.push(nodeX[fi], nodeX[ti], null);
+          edgeY.push(nodeY[fi], nodeY[ti], null);
+          edgeZ.push(nodeZ[fi], nodeZ[ti], null);
+        }); });
+      });
+      const nodeTrace = {
+        x: nodeX, y: nodeY, z: nodeZ,
+        mode: 'markers+text',
+        type: 'scatter3d',
+        text: nodeLabels,
+        marker: { size: 12, color: nodeColors, opacity: 0.8 },
+        name: 'Nodes'
+      };
+      const edgeTrace = {
+        x: edgeX, y: edgeY, z: edgeZ,
+        mode: 'lines',
+        type: 'scatter3d',
+        line: { color: edgeColor, width: 2 },
+        hoverinfo: 'none',
+        name: 'Edges'
+      };
+      const layout = {
+        margin: { l: 0, r: 0, b: 0, t: 0 },
+        scene: {
+          xaxis: { showticklabels: false, showbackground: false },
+          yaxis: { showticklabels: false, showbackground: false },
+          zaxis: { showticklabels: false, showbackground: false }
+        },
+        showlegend: false
+      };
+      plotlyGraphObject = { data: [nodeTrace, edgeTrace], layout };
+      Plotly.newPlot('pathContainer', [nodeTrace, edgeTrace], layout);
+      document.getElementById('pathContainer').style.display = 'block';
+    }
+    
+    function createSankeyDiagram(transactions) {
+      let linkMap = new Map();
+      transactions.forEach(tx => {
+        const fromAddrs = tx.from.split(', ');
+        const toAddrs = tx.to.split(', ');
+        fromAddrs.forEach(f => { toAddrs.forEach(t => {
+          const key = `${f}->${t}`;
+          linkMap.set(key, (linkMap.get(key) || 0) + 1);
+        }); });
+      });
+      const allNodes = Array.from(new Set([...Array.from(linkMap.keys()).flatMap(key => key.split('->'))]));
+      const nodeIndex = new Map(allNodes.map((n, i) => [n, i]));
+      const sankeyLinks = [];
+      linkMap.forEach((val, key) => {
+        const [f, t] = key.split('->');
+        sankeyLinks.push({ source: nodeIndex.get(f), target: nodeIndex.get(t), value: val });
+      });
+      const data = {
+        type: 'sankey',
+        orientation: 'h',
+        node: { pad: 15, thickness: 20, label: allNodes },
+        link: { source: sankeyLinks.map(l => l.source), target: sankeyLinks.map(l => l.target), value: sankeyLinks.map(l => l.value) }
+      };
+      const layout = { margin: { l: 10, r: 10, t: 10, b: 10 }, title: 'Sankey Diagram' };
+      Plotly.newPlot('sankeyContainer', [data], layout);
+    }
+    
+    function updateGraphAppearance() {
+      if (!plotlyGraphObject) return;
+      const nodeColor = document.getElementById('nodeColor').value;
+      const myNodeColor = document.getElementById('myNodeColor').value;
+      const edgeColor = document.getElementById('edgeColor').value;
+      plotlyGraphObject.data[0].marker.color = plotlyGraphObject.data[0].text.map(addr =>
+        addr === currentAddress ? myNodeColor : nodeColor
+      );
+      plotlyGraphObject.data[1].line.color = edgeColor;
+      Plotly.react('pathContainer', plotlyGraphObject.data, plotlyGraphObject.layout);
+    }
+    
+    function togglePathVisualization() {
+      const pathContainer = document.getElementById('pathContainer');
+      pathContainer.style.display = (pathContainer.style.display === 'none' ? 'block' : 'none');
+    }
+    
+    function fetchAddressProfile() {
+      if (!currentAddress) {
+        alert('Please fetch some transactions first.');
+        return;
+      }
+      const panel = document.getElementById('addressProfilePanel');
+      panel.style.display = 'block';
+      const profileInfo = document.getElementById('profileInfo');
+      const riskScore = Math.floor(Math.random() * 100) + 1;
+      const riskLevel = riskScore > 80 ? 'High' : (riskScore > 50 ? 'Medium' : 'Low');
+      profileInfo.innerHTML = `
+        <div><strong>Wallet:</strong> ${currentAddress}</div>
+        <div><strong>Risk Score:</strong> ${riskScore} / 100</div>
+        <div><strong>Risk Level:</strong> ${riskLevel}</div>
+      `;
+    }
+    
+    function generateReport() {
+      if (!currentAddress || currentTransactions.length === 0) {
+        alert('No transaction data for report.');
+        return;
+      }
+      const reportContainer = document.getElementById('reportContainer');
+      const reportOutput = document.getElementById('reportOutput');
+      reportContainer.style.display = 'block';
+      const snippet = currentTransactions.slice(0, 5).map((tx, i) => {
+        return `[${i + 1}] ${tx.time}, From: ${tx.from}, To: ${tx.to}, Amount: ${tx.amount}`;
+      }).join('\n');
+      reportOutput.textContent = `=== Investigation Report ===
+Address: ${currentAddress}
+Currency: ${currentCurrency}
+Transactions (sample):
+${snippet}
+...
+(End)`;
+    }
+    
+    window.generateReceipt = function() {
+      document.getElementById('loading').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('loading').style.display = 'none';
+        const randNum = Math.floor(Math.random() * 1000000);
+        document.getElementById('receipt-number').textContent = 'REC-' + randNum;
+        const val = document.getElementById('donation-amount').value || '0';
+        document.getElementById('receipt-amount').textContent = val;
+        document.getElementById('receipt-date').textContent = new Date().toLocaleDateString();
+        const cryptoSel = document.getElementById('crypto-select');
+        const cText = cryptoSel.value ? cryptoSel.options[cryptoSel.selectedIndex].text : '';
+        document.getElementById('receipt-crypto').textContent = cText;
+        document.getElementById('receipt-address').textContent = document.getElementById('donation-wallet-address').value;
+        document.getElementById('receipt').style.display = 'block';
+        document.getElementById('download-receipt-btn').style.display = 'inline-block';
+      }, 1500);
+    };
+    
+    window.clearSignature = function() {
+      const canvas = document.getElementById('signature-pad');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+    
+    window.downloadPDF = async function() {
+      const receiptEl = document.getElementById('receipt');
+      const canvas = await html2canvas(receiptEl, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'pt', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const ratio = canvas.width / canvas.height;
+      const pdfHeight = pdfWidth / ratio;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('receipt.pdf');
+    };
+    
+    function openInfoModal() {
+      document.getElementById('info-modal').style.display = 'flex';
+      document.getElementById('info-modal').setAttribute('aria-hidden', 'false');
+    }
+    
+    function closeInfoModal() {
+      document.getElementById('info-modal').style.display = 'none';
+      document.getElementById('info-modal').setAttribute('aria-hidden', 'true');
+    }
+    
+    function handleSubmit() {
+      const form = document.getElementById('submission-form');
+      if (form.checkValidity()) {
+        alert('Form submitted successfully!');
+        closeInfoModal();
+        form.reset();
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    }
+  </script>
+</body>
+</html>

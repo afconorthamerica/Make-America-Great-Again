@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Consolidated Page | CFTC & Fraudulent Crypto Asset Recovery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ===================== 第三方依赖 (CDN) ===================== -->
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+  
+  <!-- ==========================
+       External CSS Styles
+       ========================== -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- ===================== 引入你的自定义 JS ===================== -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+  <!-- DataTables Buttons JS -->
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+  <!-- DataTables Responsive JS -->
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+  <!-- Plotly for Graphs -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- html2canvas & jsPDF (for PDF export) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BXa6C9BEPpBzRANw4Z+cZJ9Ekf9cjTXmKvW7GOW50g6lm/XM7EqHf7sdI1ZtFKO2QY/6k1MzVVAN9PB+T7raYg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha512-AN5BHV1LTShU3LG7uTe77gVDijH7UCfA0x/GtjXkaTgOF7nvfJYu9y8bhApP9Er5cWfUPHcMHSEbhS8A2C7k4g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <!-- ========================
+       解决 StatsigClient 错误
+       ========================
+       如果系统中没有初始化 StatsigClient，则创建一个假实例以防止“WARN [Statsig] 无法找到 StatsigClient 实例”的错误，
+       从而避免干扰手风琴交互或数据抓取逻辑
+  -->
+  <script>
+    if (typeof window.StatsigClient === 'undefined') {
+      console.warn('StatsigClient not found. Initializing dummy StatsigClient instance.');
+      window.StatsigClient = {
+        checkGate: function() { return true; },
+        getExperiment: function() { return {}; },
+        logEvent: function() {},
+        getConfig: function() { return {}; }
+      };
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- ======================= HERO (CFTC) ====================== -->
+    <section class="hero" id="hero">
+      <div class="hero-title">
+        <img src="https://images.squarespace-cdn.com/content/672aaf4de9a9b56bf2eab856/0ba3e5b3-97fd-493a-b769-1022a7d50bbd/de71c232-94d4-408e-9df4-3b2742daeb26+%282%29.jpg" alt="CFTC Logo">
+        <h1 class="title">Fraudulent Crypto Asset Recovery Procedures & Unclaimed Property</h1>
+      </div>
+      <div class="content-container">
+        <div class="highlight-block">
+          <p><strong>In Fiscal Year 2023, the U.S. Department of the Treasury employed advanced artificial intelligence methodologies to identify and recover <strong>$3.7 billion</strong> in fraudulent cryptocurrency funds. For official details, please refer to the <a href="https://home.treasury.gov/news/press-releases/jy2134" target="_blank" rel="noopener">U.S. Department of the Treasury Official Press Release</a>.</strong></p>
+        </div>
+        <div class="highlight-block">
+          <p><strong>Our mission is to ensure that victims of cryptocurrency fraud receive timely and fair compensation, thereby enhancing transparency and accountability. For additional guidance, please review the <a href="https://www.cftc.gov/PressRoom/SpeechesTestimony/johnsonstatment080824" target="_blank" rel="noopener">Federal Official's Statement</a>.</strong></p>
+        </div>
+      </div>
+      <div class="official-resource"><strong>Official U.S. Federal Government Resource</strong></div>
+    </section>
+
+    <!-- ======================= CAROUSEL ====================== -->
+    <div class="carousel" aria-live="polite" aria-label="Recovery and Whistleblower Resources Carousel">
+      <!-- 1) Match Recovery Funds Section -->
+      <div class="carousel-item active" role="tabpanel" aria-hidden="false">
+        <div class="section-title">
+          <img src="https://www.cftc.gov/sites/default/files/2020-06/Balance_1%20%282%29.png" alt="Anti-Fraud Center Logo"> 
+          Match Recovery Funds
+        </div>
+        <div class="section-description">
+          Access resources related to identifying and matching cryptocurrency victims with recovered funds.
+        </div>
+        <ul class="resource-list">
+          <li class="resource-item-container">
+            <a href="https://www.treasury.gov/services/Pages/Fraud.aspx" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-university" aria-hidden="true"></i> U.S. Treasury Fraud Services
+            </a>
+          </li>
+          <li class="resource-item-container">
+            <a href="https://claims.ftx.com/privacy" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-file-signature" aria-hidden="true"></i> FTX Claims Portal
+            </a>
+          </li>
+          <li class="resource-item-container">
+            <a href="https://www.investvoyager.com/claim" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-wallet" aria-hidden="true"></i> Voyager Claims Portal
+            </a>
+          </li>
+          <li class="resource-item-container">
+            <a href="https://registry.telexfreeclaims.com/#" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-clipboard-check" aria-hidden="true"></i> BMC Claims Portal
+            </a>
+          </li>
+          <li class="resource-item-container">
+            <a href="https://www.afconorthamerica.com/s/Identity_Information_Submission_Form.trc" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-id-card" aria-hidden="true"></i> Identity Submission Form
+            </a>
+          </li>
+          <li class="resource-item-container">
+            <a href="https://www.afconorthamerica.com/s/Copy-of-Compensation-Program-Description.pdf" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-file-alt" aria-hidden="true"></i> Compensation Plan
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- 2) Whistleblower Program Section -->
+      <div class="carousel-item" role="tabpanel" aria-hidden="true">
+        <div class="section-title">
+          <img src="https://www.cftc.gov/sites/default/files/2019-08/Whistle%20from%20whistleblower.gov__0.png" alt="Whistleblower Program Icon">
+          Whistleblower Program
+        </div>
+        <div class="section-description">
+          The Whistleblower Office strongly encourages you to submit any forms through our online portal on this site and to submit any requests or supplemental communications via email (<a href="mailto:whistleblower@cftc.gov">whistleblower@cftc.gov</a>). If your tip relates to something else, please go to <a href="https://www.usa.gov" target="_blank" rel="noopener">www.USA.gov</a> or call (1-844-872-4681).
+        </div>
+        <ul class="resource-list">
+          <li class="resource-item-container">
+            <a href="https://www.afconorthamerica.com/s/TCRSubmissionProcedures.pdf" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-file-contract" aria-hidden="true"></i> Submission Procedures
+            </a>
+          </li>
+          <li class="resource-item-container">
+            <a href="https://www.afconorthamerica.com/s/InstructionsforCompletingFormTCR.pdf" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-file-signature" aria-hidden="true"></i> Instructions for Form TCR
+            </a>
+          </li>
+          <li class="resource-item-container">
+            <a href="https://www.afconorthamerica.com/s/cftc_form_tcr-1.pdf" target="_blank" rel="noopener" class="resource-item">
+              <i class="fas fa-download" aria-hidden="true"></i> Download TCR Form
+            </a>
+          </li>
+        </ul>
+        <a href="https://www.whistleblower.gov/" class="btn" target="_blank" rel="noopener">Submit a Whistleblower Tip</a>
+      </div>
+    </div>
+    
+    <!-- Carousel Controls -->
+    <div class="carousel-controls">
+      <button id="dot-prev" class="dot"></button>
+      <button id="dot-next" class="dot"></button>
+    </div>
+
+    <!-- ===============================================
+         (1) Crypto Transaction Tracker
+         =============================================== -->
+    <div id="outer-container">
+      <div id="container">
+        <h2>Cryptocurrency Transaction Tracker &amp; Tracing the Origin on Blockchain</h2>
+        <p>Enter wallet address (BTC, ETH, or USDT) and click the corresponding button to view detailed transaction profiles, a 3D graph and a comprehensive report.</p>
+        <!-- 错误警告 -->
+        <div class="alert alert-danger hidden" id="errorAlert" role="alert"></div>
+
+        <!-- 输入框 -->
+        <div class="input-group">
+          <input type="text" id="tracker-walletAddress" placeholder="Enter wallet address (BTC, ETH, or USDT)" />
+        </div>
+
+        <!-- 功能按钮组：BTC/ETH/USDT + 画像 + 报告 -->
+        <div class="button-group">
+          <button id="btn-btc">BTC</button>
+          <button id="btn-eth">ETH</button>
+          <button id="btn-usdt">USDT</button>
+          <button id="togglePathButton" onclick="togglePathVisualization()">Show/Hide 3D Path</button>
+          <button id="addressProfileBtn">Address Profile</button>
+          <button id="generateReportBtn">Generate Report</button>
+        </div>
+
+        <!-- Loading 遮罩层与动画 -->
+        <div class="loading-overlay" id="loadingOverlay"></div>
+        <div class="loading-indicator" id="loadingIndicator">
+          <div></div><div></div><div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+
+        <!-- 主体内容布局：左侧图表区 + 右侧表格与定制面板 -->
+        <div class="content-layout">
+          <div class="graph-container">
+            <!-- 3D 资金流向图 -->
+            <div id="pathContainer"></div>
+            <!-- Sankey 2D 可视化图 -->
+            <div id="sankeyContainer"></div>
+          </div>
+          <div class="table-customization-container">
+            <!-- 交易记录表格 -->
+            <div class="table-container">
+              <table id="transactionsTable">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Hash</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Fee</th>
+                    <th>Risk Label</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <!-- 分页按钮 -->
+            <div class="pagination-container" id="paginationContainer"></div>
+            <!-- 可视化自定义面板 -->
+            <div class="customization-panel">
+              <h4>Customize Graph</h4>
+              <label for="nodeColor">Node Color</label>
+              <input type="color" id="nodeColor" value="#008000" />
+              <label for="myNodeColor">Searched Address Node Color</label>
+              <input type="color" id="myNodeColor" value="#0000ff" />
+              <label for="edgeColor">Edge Color</label>
+              <input type="color" id="edgeColor" value="#808080" />
+              <button onclick="updateGraphAppearance()">Update</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 地址画像面板 -->
+        <div class="address-profile-panel" id="addressProfilePanel">
+          <h4>Address Profile &amp; Risk Score</h4>
+          <div class="profile-info" id="profileInfo"></div>
+        </div>
+
+        <!-- 取证报告容器 -->
+        <div class="report-container" id="reportContainer">
+          <h4>Investigation Report</h4>
+          <div class="report-output" id="reportOutput"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===============================================
+         (2) Fraudulent Crypto Asset Recovery
+         =============================================== -->
+    <section class="tracing-origin-section">
+      <h1>Tracing the Origin on Blockchain</h1>
+      <div class="notice-text">
+        <p><strong>OFFICIAL NOTICE:</strong> The Federal Asset Recovery Service is dedicated to assisting citizens in recovering blockchain assets lost due to accidental mishandling or fraudulent activities. To expedite verification, you may send up to $5 in cryptocurrency from a traceable wallet address registered under your control. Once the transaction is successful, please email your wallet address along with your identifying information to our office.</p>
+        <p>The Federal Asset Recovery Service is dedicated to assisting citizens in recovering blockchain assets lost due to accidental mishandling or fraudulent activities. Through a secure and transparent process, we provide effective fund recovery support to victims. This service applies only to specific assets and blockchain networks. For further details, please refer to the Asset Support Policy.</p>
+      </div>
+
+      <div class="tracing-origin-container">
+        <!-- 左侧：Accordion -->
+        <div class="accordion-wrapper">
+          <!-- 1. Submit Personal Info -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Submit Personal and Transaction Information <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <p>Please follow the steps below to submit your personal and transaction information:</p>
+              <ul>
+                <li><strong>Name:</strong> Must match the name on a government-issued ID.</li>
+                <li><strong>Contact Phone Number:</strong> Used to receive SMS notifications about service progress.</li>
+                <li><strong>Email Address:</strong> Used to receive updates on recovery progress and detailed instructions.</li>
+                <li><strong>Fill in Transaction Information:</strong>
+                  <ul>
+                    <li><strong>Transaction Hash (TxID):</strong> Copy the complete transaction hash string from a blockchain explorer.</li>
+                    <li><strong>Type and Amount of Tokens Sent:</strong> Such as USDT, USDC, or other supported ERC-20 tokens.</li>
+                    <li><strong>Incorrectly Sent Address and Target Network:</strong> Including the source address and the mistakenly sent target address.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 2. Identity Verification -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Identity Verification <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <p>Follow the steps below to complete identity verification:</p>
+              <ul>
+                <li><strong>Send Verification Transaction:</strong>
+                  <ul>
+                    <li>Log in to a supported cryptocurrency platform (e.g., Coinbase, Binance).</li>
+                    <li>Purchase a small amount of Ethereum (ETH) as verification funds.</li>
+                    <li>Send the specified amount (no more than $5) to the federal verification address provided by the system.</li>
+                  </ul>
+                </li>
+                <li><strong>Verification Result:</strong> The system will send a confirmation email after the verification transaction is confirmed. If verification fails, users must resubmit.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- 3. Why Send Crypto -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Why Send Cryptocurrency? <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <h3>Confirm Wallet Ownership</h3>
+              <ul>
+                <li><strong>Ensure the authenticity of the receiving wallet:</strong> By verifying the transaction, the system can confirm the applicant controls the provided receiving wallet address.</li>
+                <li><strong>Prevent fraudulent activities:</strong> Verification transactions reduce the risk of impostors claiming funds.</li>
+              </ul>
+              <h3>Verify Applicant's Operational Capability</h3>
+              <ul>
+                <li><strong>Ensure the applicant is familiar with basic blockchain operations:</strong> Requiring a small transfer confirms the applicant can manage their wallet.</li>
+                <li><strong>Avoid fund transfer mistakes:</strong> Checks the validity and compatibility of wallet addresses.</li>
+              </ul>
+              <h3>Enhance Service Security and Compliance</h3>
+              <ul>
+                <li><strong>Multi-factor verification:</strong> Identity verification is necessary to prevent unauthorized transfers.</li>
+                <li><strong>Reduce malicious applications:</strong> A small verification filters out some bots or scammers.</li>
+              </ul>
+              <h3>Compliance with Blockchain Technical Standards</h3>
+              <ul>
+                <li><strong>Verify network compatibility:</strong> Confirm the applicant's wallet supports the specified blockchain.</li>
+                <li><strong>Check fund transfer paths:</strong> Identify potential issues early, such as contract addresses that cannot receive assets.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- 4. How We Recover Assets -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              How We Recover Assets <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <ul>
+                <li><strong>Track the flow of fraudulent cryptocurrency assets.</strong></li>
+                <li><strong>Confirm the current holding address of the assets.</strong></li>
+                <li><strong>Transfer recovered tokens to the federal intermediary wallet for secure verification.</strong></li>
+              </ul>
+            </div>
+          </div>
+          <!-- 5. Asset Tracking Procedures -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Asset Tracking Procedures <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <p>Ensure the process is transparent, secure, and compliant with federal standards:</p>
+              <h3>Using Blockchain Analysis Tools</h3>
+              <p>The Federal Asset Recovery Service utilizes advanced blockchain technology platforms to track the flow of cryptocurrency assets, ensuring precise localization. Commonly used tools include:</p>
+              <ul>
+                <li><strong>Chainalysis</strong>, <strong>TRM Labs</strong>, <strong>Elliptic</strong>, <strong>CipherTrace</strong> etc.</li>
+              </ul>
+              <h3>Tracking the Flow of Fraudulent Assets</h3>
+              <ul>
+                <li><strong>Operational Steps:</strong></li>
+                <li><strong>Gather Transaction Info</strong>, verify TxID, sending & receiving addresses.</li>
+                <li><strong>Trace Transaction Paths</strong>, mark all associated addresses.</li>
+                <li><strong>Identify Potential Risks:</strong> Check blacklists & known fraudulent activities.</li>
+              </ul>
+              <h3>Confirming the Current Holding Address</h3>
+              <ul>
+                <li>Real-time Monitoring for recent transfers.</li>
+                <li>Verify Legitimacy; freeze exchange accounts if needed.</li>
+              </ul>
+              <h3>Recovering Tokens & Transfer</h3>
+              <ul>
+                <li>Confirm Recovery Conditions, negotiate with holder if needed.</li>
+                <li>Obtain asset freezing orders; move tokens to intermediary wallet.</li>
+                <li><strong>Intermediary Wallet:</strong> Isolate & verify assets for security.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- 6. Transfer of Funds -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Transfer of Funds to User Wallet <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <ul>
+                <li>Upon verification completion, recovered assets are transferred to the user's wallet after fees.</li>
+                <li>After transfer, user gets:
+                  <ul>
+                    <li>Notification of successful recovery.</li>
+                    <li>Transaction hash (TxID) for blockchain explorer verification.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 7. Fee Settlement -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Fee Settlement and Completion Notification <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <h3>Fee Settlement</h3>
+              <ul>
+                <li><strong>Service Fees:</strong> 5% fee if &gt; $100 recovered.</li>
+                <li><strong>Network Fees:</strong> Deducted from ETH balance or recovery amount.</li>
+              </ul>
+              <h3>Service Fees and Transaction Cost Explanation</h3>
+              <p>We charge a reasonable prepaid fee to cover tracking & transfer costs.</p>
+              <ul>
+                <li><strong>Service Fees (Prepaid):</strong>
+                  <ul>
+                    <li>5% for amounts &gt; $100. Excess refunded or difference paid if mismatch.</li>
+                  </ul>
+                </li>
+                <li><strong>Network Transaction Fees:</strong>
+                  <ul>
+                    <li>Includes miner/Gas fees. Calculated in real-time.</li>
+                  </ul>
+                </li>
+              </ul>
+              <h3>Fee Transparency</h3>
+              <ul>
+                <li>Applicant must confirm & pay the prepaid fee when applying.</li>
+                <li>Upon success, a detailed bill is provided (recovered amount, fees, etc.).</li>
+              </ul>
+              <h3>Special Notice</h3>
+              <ul>
+                <li>Fees are executed per federal law; partial refunds for unsuccessful cases.</li>
+              </ul>
+              <p><strong>Disclaimer:</strong> No 100% success guarantee, but we assist to the fullest extent legally possible.</p>
+              <h3>Completion Notification</h3>
+              <ul>
+                <li>Details on recovered assets, fees, final TxID are provided to user.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- 8. Tax Benefits -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Tax Benefits <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <p>Your donation may qualify for federal tax deductions under the Charitable Contributions Tax Act:</p>
+              <ul>
+                <li>Under $250: bank statements or transaction records suffice.</li>
+                <li>$250 or more: Official receipt is required.</li>
+                <li>Non-cash donations: Valuation documentation needed.</li>
+                <li>Crypto donations: USD valuation statement based on market rate on the transaction date.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- 9. Important Notices -->
+          <div class="accordion-section">
+            <a class="accordion-header" href="javascript:void(0)">
+              Important Notices and Disclaimer <span class="toggle-icon">Show</span>
+            </a>
+            <div class="accordion-content">
+              <h3>Scope of Application</h3>
+              <ul>
+                <li>Only for supported ERC-20 tokens & specified networks.</li>
+                <li>Check Asset Support Policy before applying.</li>
+              </ul>
+              <h3>Service Time & Results</h3>
+              <ul>
+                <li>Delays can occur due to network congestion or complexity.</li>
+                <li>No 100% guarantee, but best efforts are made.</li>
+              </ul>
+              <h3>Legal Liability</h3>
+              <ul>
+                <li>No liability for incorrect user info or uncontrollable factors.</li>
+                <li>Applicants must ensure accuracy to avoid delays/failures.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧：Donation Container -->
+<div class="donation-wrapper">
+  <div class="donation-container">
+    <h2>Tracing the Origin on Blockchain</h2>
+    <div class="trust-notice">
+      <p><strong>The Federal Asset Recovery Service</strong> assists in recovering blockchain assets lost due to fraud. This service applies only to supported assets and networks.</p>
+    </div>
+    <!-- Cryptocurrency Selection -->
+    <label for="crypto-select">Select Cryptocurrency:</label>
+    <select id="crypto-select">
+      <option value="">--Please Select--</option>
+      <option value="bitcoin">Bitcoin (BTC)</option>
+      <option value="ethereum">Ethereum (ETH)</option>
+      <option value="trx">Tron (TRX)</option>
+    </select>
+    <!-- Wallet Address & QR Code -->
+    <div class="address-container" id="address-container" style="display:none;">
+      <div class="wallet-qr-container">
+        <div class="wallet-details">
+          <label for="donation-wallet-address">Wallet Address:</label>
+          <input type="text" id="donation-wallet-address" readonly>
+          <div class="btn-group">
+            <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+          </div>
+        </div>
+        <div class="qr-code">
+          <label>QR Code:</label>
+          <img id="qr-code" src="" alt="QR Code" width="180" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <!-- Donation Amount -->
+    <label for="donation-amount">Donation Amount (USD):</label>
+    <input type="number" id="donation-amount" min="1" placeholder="Enter donation amount">
+    <!-- Receipt Prompt -->
+    <div id="receipt-prompt">
+      Donations exceeding $250 require the generation of a receipt.
+    </div>
+    <!-- Generate Receipt Button -->
+    <div class="btn-group">
+      <button class="download-receipt-btn" id="generate-receipt-btn" onclick="generateReceipt()" style="display:none;">Generate Receipt</button>
+    </div>
+    <!-- Loading Indicator -->
+    <div id="loading" style="display:none; text-align: center; margin-top: 15px;">
+      <p>Generating receipt, please wait...</p>
+    </div>
+    <!-- Donation Receipt -->
+    <div class="receipt" id="receipt">
+      <h3>Fraudulent Funds Recovery via Blockchain Hash Matching</h3>
+      <p>Thank you for your generous donation!</p>
+      <p><strong>Receipt Number:</strong> <span id="receipt-number"></span></p>
+      <p><strong>Amount:</strong> $<span id="receipt-amount"></span></p>
+      <p><strong>Date:</strong> <span id="receipt-date"></span></p>
+      <p><strong>Cryptocurrency:</strong> <span id="receipt-crypto"></span></p>
+      <p><strong>Wallet Address:</strong> <span id="receipt-address"></span></p>
+      <p><strong>Purpose:</strong> <span id="receipt-purpose">Public Infrastructure Projects</span></p>
+      <label for="signature-pad">Signature:</label>
+      <canvas id="signature-pad" width="300" height="80" style="border:1px solid #ccc; border-radius:8px;"></canvas>
+      <div class="btn-group">
+        <button class="clear-signature-btn" onclick="clearSignature()">Clear Signature</button>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="download-receipt-btn" id="download-receipt-btn" onclick="downloadPDF()" style="display:none;">Download Receipt</button>
+    </div>
+    <!-- Donation Information Section -->
+    <div class="donation-info">
+      <details>
+        <summary>Donation Receipt</summary>
+        <p>For donations exceeding $250, an official receipt is required for tax purposes. Our receipt includes your name, donation date and amount, recipient details, and a confirmation statement indicating no goods or services were exchanged.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+
+    <!-- ===============================================
+         (3) Official Query & Recoverable Funds Plan
+         =============================================== -->
+    <div class="main-container">
+      <h1 class="title-page">Official Query & Recoverable Funds Plan</h1>
+      <p class="title-desc">
+        In order to determine the status of recovered cryptocurrency funds held in federal custody and to assess a feasible path for returning them to qualified victims, the Federal Asset Recovery Service offers the following official services.
+      </p>
+      <!-- Submit Info Button & Modal -->
+      <div class="submit-info-container">
+        <button id="submit-info-btn" class="submit-info-btn">Submit Information</button>
+      </div>
+      <!-- Accordion 1: Preliminary Query & Official Report -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          1. Preliminary Query & Official Report
+          <span class="toggle-icon">Show</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li><strong>Scope:</strong> We conduct an exhaustive check in our official database of recovered fraudulent assets, cross-referencing the applicant’s wallet addresses, transaction hashes, and personal identifiers.</li>
+            <li><strong>Outcome:</strong>
+              <ul>
+                <li>If matching funds are found under federal custody, an <em>“Asset Confirmation Notice”</em> will be issued.</li>
+                <li>If no matching funds are identified, a <em>“Feasibility Report”</em> is provided.</li>
+              </ul>
+            </li>
+            <li><strong>Official Report Issuance:</strong> A signed and sealed <em>“Query & Status Report”</em> is delivered digitally (and optionally by mail upon request).</li>
+            <li><strong>Fee:</strong> <ul><li><strong>Preliminary Query Fee:</strong> $200 (non-refundable)</li></ul></li>
+            <li><strong>Timeframe:</strong> Typically 7–14 business days</li>
+            <li><strong>Disclaimer:</strong> This report only reflects data currently in federal custody.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Accordion 2: Recovery Plan & Verification Process -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          2. Recovery Plan & Verification Process
+          <span class="toggle-icon">Show</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li><strong>Scope:</strong>
+              <ul>
+                <li><strong>Matching Funds Found:</strong> “Official Recovery Plan”.</li>
+                <li><strong>No Funds Held:</strong> “Feasible Funds Recovery Strategy” with advanced blockchain forensics.</li>
+              </ul>
+            </li>
+            <li><strong>Outcome:</strong>
+              <ul>
+                <li><strong>Confirmed Federal Holdings:</strong> Official claim procedure guidance.</li>
+                <li><strong>Advanced Steps:</strong> If assets not in direct control, investigative blueprint to locate/freeze assets.</li>
+              </ul>
+            </li>
+            <li><strong>Fee Structure:</strong>
+              <ul>
+                <li><strong>Verification Fee:</strong> $300</li>
+                <li><strong>Success Fee:</strong> 5% of recovered amount</li>
+                <li><strong>Additional:</strong> Court filing, attorney costs, Gas fees</li>
+              </ul>
+            </li>
+            <li><strong>Legal & Compliance:</strong> Title 31 U.S.C. & AML/KYC standards.</li>
+            <li><strong>Disclaimer:</strong> No 100% guarantee. Recovery depends on third parties, etc.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Accordion 3: Additional Official Statements -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          3. Additional Official Statements
+          <span class="toggle-icon">Show</span>
+        </div>
+        <div class="accordion-content">
+          <p><strong>Refund & Upgrade Policy:</strong><br>
+            Fees paid are generally non-refundable once the process begins. If the case escalates beyond the existing plan, an upgraded fee arrangement may be required.
+          </p>
+          <br>
+          <p><strong>Partial/Ongoing Disbursements:</strong><br>
+            If only part of the victim’s funds are located, proportionate restitution is issued net of fees, with the possibility of further steps for unrecovered amounts.
+          </p>
+          <!-- Fee Table -->
+          <h3 style="margin-top:20px;">New Fee Table (Further Detail)</h3>
+          <table class="fee-table">
+            <thead>
+              <tr>
+                <th>Fee Items</th>
+                <th>Conditions for Collection</th>
+                <th>Description</th>
+                <th>Amount/Rate</th>
+                <th>Refundable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Application/Registration Fee<br>(Application Fee)</td>
+                <td>Charged when victim submits the initial application form</td>
+                <td>Covers admin management</td>
+                <td>$100 (one-time)</td>
+                <td>Non-refundable</td>
+              </tr>
+              <tr>
+                <td>Investigation/Processing Fee<br>(Investigation Fee)</td>
+                <td>Once blockchain tracing officially starts</td>
+                <td>For investigators, blockchain tools, etc.</td>
+                <td>$300 (one-time)</td>
+                <td>Partially refundable ($150 if in-depth not possible)</td>
+              </tr>
+              <tr>
+                <td>Success Commission<br>(Success Fee)</td>
+                <td>After funds are successfully recovered</td>
+                <td>Covers subsequent resource costs</td>
+                <td>5%~10% of Recovered Amount</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td>Blockchain Network Fee<br>(Network/Gas Fees)</td>
+                <td>When on-chain operations are needed</td>
+                <td>Miner/Gas fees, real-time rate</td>
+                <td>Varies</td>
+                <td>Non-refundable</td>
+              </tr>
+              <tr>
+                <td>Legal services / Lawyer fees<br>(Legal Services)</td>
+                <td>If legal procedures are required</td>
+                <td>Case-based or hourly</td>
+                <td>Varies</td>
+                <td>No charge if not used</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MODAL: Submit Information -->
+      <div id="info-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+        <div class="info-modal-content">
+          <button class="info-modal-close" id="info-modal-close" aria-label="Close Modal">&times;</button>
+          <h2 id="modal-title">U.S. Anti-Fraud Center (OCEO)</h2>
+          <p><strong>Identity Information Submission and Complaint Platform Matching</strong></p>
+          <form id="submission-form" enctype="multipart/form-data">
+            <!-- Section 1: Personal Information -->
+            <h3>Section 1: Personal Information</h3>
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="full-name" name="full-name" placeholder="Enter full name" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" placeholder="e.g. 01/01/1990" required>
+
+            <label for="contact-number">Contact Number:</label>
+            <input type="tel" id="contact-number" name="contact-number" placeholder="e.g. +1 (xxx) xxx-xxxx" required>
+
+            <label for="email-address">Email Address:</label>
+            <input type="email" id="email-address" name="email-address" placeholder="yourname@example.com" required>
+
+            <label for="residential-address">Residential Address:</label>
+            <input type="text" id="residential-address" name="residential-address" placeholder="Street, City, State, Zip" required>
+
+            <!-- Section 2: Platform Information -->
+            <h3>Section 2: Platform Information</h3>
+            <label for="platform-name">Platform Name:</label>
+            <input type="text" id="platform-name" name="platform-name" placeholder="Enter platform name" required>
+
+            <label for="platform-website">Platform Website URL:</label>
+            <input type="url" id="platform-website" name="platform-website" placeholder="Enter website URL" required>
+
+            <label for="platform-contact">Platform Contact Information:</label>
+            <input type="text" id="platform-contact" name="platform-contact" placeholder="Phone/Email of platform support">
+
+            <label for="initial-contact-date">Date of Initial Contact:</label>
+            <input type="date" id="initial-contact-date" name="initial-contact-date" placeholder="MM/DD/YYYY">
+
+            <!-- Section 3: Transaction Details -->
+            <h3>Section 3: Transaction Details</h3>
+            <label for="transaction-ids">Transaction ID(s):</label>
+            <input type="text" id="transaction-ids" name="transaction-ids" placeholder="Enter TxID(s)" required>
+
+            <label for="amount-transferred">Amount Transferred:</label>
+            <input type="text" id="amount-transferred" name="amount-transferred" placeholder="$ or Crypto Amount" required>
+
+            <label for="transaction-dates">Date of Transaction(s):</label>
+            <input type="text" id="transaction-dates" name="transaction-dates" placeholder="MM/DD/YYYY or approximate" required>
+
+            <label for="transfer-method">Method of Transfer:</label>
+            <input type="text" id="transfer-method" name="transfer-method" placeholder="e.g. bank transfer, crypto" required>
+
+            <label for="wallet-address">Wallet Address (if applicable):</label>
+            <input type="text" id="wallet-address" name="wallet-address" placeholder="Destination/Source wallet address">
+
+            <!-- Section 4: Description of Complaint -->
+            <h3>Section 4: Description of Complaint</h3>
+            <label for="issue-description">Brief Description of Issue:</label>
+            <textarea id="issue-description" name="issue-description" placeholder="..."></textarea>
+
+            <label for="actions-taken">Actions Taken:</label>
+            <textarea id="actions-taken" name="actions-taken" placeholder="..."></textarea>
+
+            <!-- Section 5: Additional Information -->
+            <h3>Section 5: Additional Information</h3>
+            <p>Additional Relevant Documents Provided:</p>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="additional-documents" value="Proof of Transaction"> Proof of Transaction</label>
+              <label><input type="checkbox" name="additional-documents" value="Communication Records"> Communication Records with Platform</label>
+              <label><input type="checkbox" name="additional-documents" value="Identification Document"> Identification Document</label>
+              <label><input type="checkbox" name="additional-documents" value="Other"> Other (please specify):</label>
+              <input type="text" id="other-documents" name="other-documents" placeholder="Specify other documents">
+            </div>
+
+            <!-- Filing Fee Payment -->
+            <label for="crypto-address-match">Filing Fee Payment:</label>
+            <select id="crypto-address-match" name="crypto-address-match" required>
+              <option value="" disabled selected>Select your option</option>
+              <option value="match">Match your cryptocurrency address</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label for="payment-confirmation">Attach Payment Confirmation Receipt:</label>
+            <input type="file" id="payment-confirmation" name="payment-confirmation" accept=".pdf,.jpg,.jpeg,.png" required>
+
+            <p style="font-size: 0.85rem; color: #666;">
+              Please attach your payment confirmation receipt or email it to 
+              <a href="mailto:proceedings@cftc.gov">proceedings@cftc.gov</a>. 
+              Payment confirmation must be received before the information can be accepted.
+            </p>
+
+            <p><strong>Declaration:</strong></p>
+            <p>I hereby declare that the information provided is true and accurate to the best of my knowledge.</p>
+            <label for="signature">Signature:</label>
+            <input type="text" id="signature" name="signature" placeholder="Type your name or sign digitally" required>
+
+            <label for="submission-date">Date:</label>
+            <input type="date" id="submission-date" name="submission-date" required>
+
+            <!-- Submit Button -->
+            <button type="button" class="submit-btn" onclick="handleSubmit()">Submit</button>
+
+            <p style="font-size: 0.85rem; color: #666; margin-top: 15px;">
+              <strong>NOTE:</strong> Once the filing fee is paid to the CFTC, it is non-refundable.
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- OFFICIAL NOTICE -->
+      <div class="notice-text">
+        <p><strong>OFFICIAL NOTICE:</strong></p>
+        <p>To ensure compliance with federal regulations, prevent fraud, and protect against identity impersonation, all payments must originate from a traceable wallet address registered under your ownership...</p>
+        <p>By remitting payment to the designated cryptocurrency wallet address provided below, you formally authorize the commencement of the selected recovery program...</p>
+        <p><strong>IMPORTANT:</strong> Payments that do not meet these criteria may result in delays or rejection...</p>
+
+        <h2>Relevant Federal Regulations and Guidelines:</h2>
+        <ul>
+          <li><a href="https://www.ecfr.gov/current/title-17/chapter-I/part-12" target="_blank">Compensation Regulations (Title 17, Part 12)</a></li>
+          <li><a href="https://www.ecfr.gov/current/title-17/chapter-I/part-12#12.13" target="_blank">Fee Structure Details (Title 17, Part 12.13)</a></li>
+          <li><a href="https://www.fincen.gov/resources/statutes-regulations/guidance/application-fincens-regulations-persons-administering" target="_blank">FinCEN Guidance on Virtual Currencies</a></li>
+          <li><a href="https://www.irs.gov/newsroom/irs-reminds-taxpayers-to-report-virtual-currency-transactions" target="_blank">IRS Guidelines on Virtual Currency</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- end .main-container -->
+  </div>
+  <!-- end .wrapper -->
+
+  <!-- ===============================
+       External JavaScript (逻辑脚本)
+       =============================== -->
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BXa6C9BEPpBzRANw4Z+cZJ9Ekf9cjTXmKvW7GOW50g6lm/XM7EqHf7sdI1ZtFKO2QY/6k1MzVVAN9PB+T7raYg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha512-AN5BHV1LTShU3LG7uTe77gVDijH7UCfA0x/GtjXkaTgOF7nvfJYu9y8bhApP9Er5cWfUPHcMHSEbhS8A2C7k4g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- ===============================
+       自定义 JavaScript (scripts.js)
+       =============================== -->
+  <script>
+    // 全局变量
+    const etherscanApiKey = 'D5VQCJG5N5FN7B92YA4EG48NSKK1EDPI9H';
+    const usdtContractAddress = '0xdac17f958d2ee523a2206206994597c13d831ec7';
+    const rowsPerPage = 10;
+    let currentPage = 1, totalPages = 1, currentCurrency = null, currentAddress = null, currentTransactions = [], plotlyGraphObject = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initCarousel();
+      document.getElementById('btn-btc').addEventListener('click', () => getTransactions('BTC'));
+      document.getElementById('btn-eth').addEventListener('click', () => getTransactions('ETH'));
+      document.getElementById('btn-usdt').addEventListener('click', () => getTransactions('USDT'));
+      document.getElementById('addressProfileBtn').addEventListener('click', fetchAddressProfile);
+      document.getElementById('generateReportBtn').addEventListener('click', generateReport);
+      
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const content = header.nextElementSibling;
+          const icon = header.querySelector('.toggle-icon');
+          content.classList.toggle('active');
+          icon.textContent = content.classList.contains('active') ? 'Hide' : 'Show';
+          document.querySelectorAll('.accordion-header').forEach(otherHeader => {
+            if (otherHeader !== header) {
+              otherHeader.nextElementSibling.classList.remove('active');
+              otherHeader.querySelector('.toggle-icon').textContent = 'Show';
+            }
+          });
+        });
+      });
+      
+      window.copyAddress = function() {
+        const addr = document.getElementById('donation-wallet-address').value;
+        if (addr) {
+          navigator.clipboard.writeText(addr).then(() => { alert('Wallet address copied!'); });
+        }
+      };
+      
+      document.getElementById('donation-amount').addEventListener('input', function() {
+        const amount = parseFloat(this.value);
+        const promptEl = document.getElementById('receipt-prompt');
+        const genBtn = document.getElementById('generate-receipt-btn');
+        if (amount > 250) { promptEl.style.display = 'block'; genBtn.style.display = 'inline-block'; }
+        else { promptEl.style.display = 'none'; genBtn.style.display = 'none'; }
+      });
+      
+      document.getElementById('submit-info-btn').addEventListener('click', openInfoModal);
+      document.getElementById('info-modal-close').addEventListener('click', closeInfoModal);
+    });
+
+    // Carousel 相关
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".carousel-item");
+    const totalSlides = slides.length;
+    let slideInterval;
+    
+    function createDots() {
+      document.getElementById('dot-prev').addEventListener('click', () => {
+        clearInterval(slideInterval);
+        goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+        slideInterval = setInterval(() => { goToSlide((currentSlide + 1) % totalSlides); }, 6000);
+      });
+      document.getElementById('dot-next').addEventListener('click', () => {
+        clearInterval(slideInterval);
+        goToSlide((currentSlide + 1) % totalSlides);
+        slideInterval = setInterval(() => { goToSlide((currentSlide + 1) % totalSlides); }, 6000);
+      });
+    }
+    
+    function updateDots() {} // 不需要更新
+    
+    function goToSlide(slideIndex) {
+      slides[currentSlide].classList.remove("active");
+      slides[currentSlide].setAttribute('aria-hidden', 'true');
+      currentSlide = slideIndex;
+      slides[currentSlide].classList.add("active");
+      slides[currentSlide].setAttribute('aria-hidden', 'false');
+      updateDots();
+    }
+    
+    function initCarousel() {
+      createDots();
+      slideInterval = setInterval(() => { goToSlide((currentSlide + 1) % totalSlides); }, 6000);
+    }
+    
+    // Crypto Transaction Tracker 函数
+    async function getTransactions(currency) {
+      const addressInput = document.getElementById('tracker-walletAddress');
+      const errorAlert = document.getElementById('errorAlert');
+      if (!addressInput.value.trim()) {
+        errorAlert.textContent = 'Please enter a wallet address.';
+        errorAlert.classList.remove('hidden');
+        return;
+      }
+      errorAlert.classList.add('hidden');
+      currentCurrency = currency;
+      currentAddress = addressInput.value.trim();
+      currentPage = 1;
+      showLoadingIndicator();
+      
+      let apiUrl = '', parserFunc;
+      if (currency === 'BTC') {
+        apiUrl = `https://blockchain.info/rawaddr/${currentAddress}?cors=true`;
+        parserFunc = parseBTC;
+      } else if (currency === 'ETH') {
+        apiUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${currentAddress}&startblock=0&endblock=99999999&sort=desc&apikey=${etherscanApiKey}`;
+        parserFunc = parseETH;
+      } else if (currency === 'USDT') {
+        apiUrl = `https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=${usdtContractAddress}&address=${currentAddress}&page=1&offset=100&startblock=0&endblock=999999999&sort=desc&apikey=${etherscanApiKey}`;
+        parserFunc = parseUSDT;
+      } else {
+        errorAlert.textContent = 'Invalid currency selected.';
+        errorAlert.classList.remove('hidden');
+        hideLoadingIndicator();
+        return;
+      }
+      
+      try {
+        const resp = await fetch(apiUrl);
+        if (!resp.ok) {
+          const text = await resp.text();
+          errorAlert.textContent = `Error: ${resp.status} - ${resp.statusText}. ${text}`;
+          errorAlert.classList.remove('hidden');
+          hideLoadingIndicator();
+          return;
+        }
+        const data = await resp.json();
+        currentTransactions = await parserFunc(data, currentAddress);
+        totalPages = Math.ceil(currentTransactions.length / rowsPerPage);
+        displayPaginatedTransactions(currentPage);
+        create3DPath(currentTransactions);
+        createSankeyDiagram(currentTransactions);
+      } catch (err) {
+        console.error(err);
+        errorAlert.textContent = 'Error fetching transactions.';
+        errorAlert.classList.remove('hidden');
+      } finally {
+        hideLoadingIndicator();
+      }
+    }
+    
+    async function parseBTC(data, address) {
+      if (!data.txs) return [];
+      const riskLabels = await checkRiskLabels(data.txs.map(tx => tx.hash));
+      return data.txs.map((tx, idx) => {
+        let from = [], to = [], receivedAmount = 0, sentAmount = 0;
+        tx.inputs.forEach(input => {
+          if (input.prev_out) {
+            from.push(input.prev_out.addr);
+            if (input.prev_out.addr === address) { sentAmount += input.prev_out.value; }
+          }
+        });
+        tx.out.forEach(o => {
+          to.push(o.addr);
+          if (o.addr === address) { receivedAmount += o.value; }
+        });
+        const amount = receivedAmount > 0 ? receivedAmount : sentAmount;
+        return {
+          time: new Date(tx.time * 1000).toLocaleString(),
+          hash: tx.hash,
+          from: from.join(', '),
+          to: to.join(', '),
+          amount: `${(amount / 1e8).toFixed(8)} BTC`,
+          status: 'Confirmed',
+          fee: 'N/A',
+          riskLabel: riskLabels[idx] || 'N/A'
+        };
+      });
+    }
+    
+    async function parseETH(data, address) {
+      if (!data.result) return [];
+      const riskLabels = await checkRiskLabels(data.result.map(tx => tx.hash));
+      return data.result.map((tx, idx) => {
+        let amount = Number(tx.value);
+        let decimals = 18;
+        const direction = (tx.from.toLowerCase() === address.toLowerCase()) ? 'sent' : (tx.to.toLowerCase() === address.toLowerCase() ? 'received' : '');
+        return {
+          time: new Date(tx.timeStamp * 1000).toLocaleString(),
+          hash: tx.hash,
+          from: tx.from,
+          to: tx.to,
+          amount: `${(amount / Math.pow(10, decimals)).toFixed(6)} ${tx.tokenSymbol || 'ETH'}`,
+          status: tx.isError === '0' ? 'Confirmed' : 'Failed',
+          fee: `${((Number(tx.gasUsed) * Number(tx.gasPrice)) / 1e18).toFixed(6)} ETH`,
+          riskLabel: riskLabels[idx] || 'N/A'
+        };
+      });
+    }
+    
+    async function parseUSDT(data, address) {
+      if (!data.result) return [];
+      const riskLabels = await checkRiskLabels(data.result.map(tx => tx.hash));
+      return data.result.map((tx, idx) => {
+        const amount = Number(tx.value);
+        let decimals = Number(tx.tokenDecimal);
+        return {
+          time: new Date(tx.timeStamp * 1000).toLocaleString(),
+          hash: tx.hash,
+          from: tx.from,
+          to: tx.to,
+          amount: `${(amount / Math.pow(10, decimals)).toFixed(2)} USDT`,
+          status: tx.confirmations > 0 ? 'Confirmed' : 'Pending',
+          fee: `${((Number(tx.gasUsed) * Number(tx.gasPrice)) / 1e18).toFixed(6)} ETH`,
+          riskLabel: riskLabels[idx] || 'N/A'
+        };
+      });
+    }
+    
+    async function checkRiskLabels(txHashes) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const labels = txHashes.map(hash => {
+            const lastDigit = parseInt(hash.slice(-1), 16);
+            if (lastDigit < 5) return 'High Risk';
+            else if (lastDigit < 10) return 'Medium Risk';
+            else return 'Low Risk';
+          });
+          resolve(labels);
+        }, 300);
+      });
+    }
+    
+    function displayPaginatedTransactions(page) {
+      const tableBody = document.querySelector('#transactionsTable tbody');
+      tableBody.innerHTML = '';
+      const startIndex = (page - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      const pageData = currentTransactions.slice(startIndex, endIndex);
+      pageData.forEach(tx => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${tx.time}</td>
+          <td>${tx.hash}</td>
+          <td>${tx.from}</td>
+          <td>${tx.to}</td>
+          <td>${tx.amount}</td>
+          <td>${tx.status}</td>
+          <td>${tx.fee}</td>
+          <td>${tx.riskLabel}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+      renderPagination();
+    }
+    
+    function renderPagination() {
+      const container = document.getElementById('paginationContainer');
+      container.innerHTML = '';
+      if (totalPages <= 1) return;
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        if (i === currentPage) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          currentPage = i;
+          displayPaginatedTransactions(currentPage);
+        });
+        container.appendChild(btn);
+      }
+    }
+    
+    function showLoadingIndicator() {
+      document.getElementById('loadingOverlay').style.display = 'block';
+      document.getElementById('loadingIndicator').style.display = 'block';
+    }
+    
+    function hideLoadingIndicator() {
+      document.getElementById('loadingOverlay').style.display = 'none';
+      document.getElementById('loadingIndicator').style.display = 'none';
+    }
+    
+    // 3D 路径图 & Sankey 图
+    function create3DPath(transactions) {
+      const nodeX = [], nodeY = [], nodeZ = [];
+      const edgeX = [], edgeY = [], edgeZ = [];
+      const nodeLabels = [], nodeColors = [];
+      const addressIndexMap = new Map();
+      let idx = 0;
+      const nodeColor = document.getElementById('nodeColor').value;
+      const myNodeColor = document.getElementById('myNodeColor').value;
+      const edgeColor = document.getElementById('edgeColor').value;
+      transactions.forEach(tx => {
+        const fromAddrs = tx.from.split(', ');
+        const toAddrs = tx.to.split(', ');
+        [...fromAddrs, ...toAddrs].forEach(addr => {
+          if (!addressIndexMap.has(addr)) {
+            addressIndexMap.set(addr, idx++);
+            nodeX.push(Math.random());
+            nodeY.push(Math.random());
+            nodeZ.push(Math.random());
+            nodeLabels.push(addr);
+            nodeColors.push(addr === currentAddress ? myNodeColor : nodeColor);
+          }
+        });
+        fromAddrs.forEach(f => { 
+          toAddrs.forEach(t => {
+            const fi = addressIndexMap.get(f), ti = addressIndexMap.get(t);
+            edgeX.push(nodeX[fi], nodeX[ti], null);
+            edgeY.push(nodeY[fi], nodeY[ti], null);
+            edgeZ.push(nodeZ[fi], nodeZ[ti], null);
+          }); 
+        });
+      });
+      const nodeTrace = {
+        x: nodeX,
+        y: nodeY,
+        z: nodeZ,
+        mode: 'markers+text',
+        type: 'scatter3d',
+        text: nodeLabels,
+        marker: { size: 12, color: nodeColors, opacity: 0.8 },
+        name: 'Nodes'
+      };
+      const edgeTrace = {
+        x: edgeX,
+        y: edgeY,
+        z: edgeZ,
+        mode: 'lines',
+        type: 'scatter3d',
+        line: { color: edgeColor, width: 2 },
+        hoverinfo: 'none',
+        name: 'Edges'
+      };
+      const layout = {
+        margin: { l: 0, r: 0, b: 0, t: 0 },
+        scene: {
+          xaxis: { showticklabels: false, showbackground: false },
+          yaxis: { showticklabels: false, showbackground: false },
+          zaxis: { showticklabels: false, showbackground: false }
+        },
+        showlegend: false
+      };
+      plotlyGraphObject = { data: [nodeTrace, edgeTrace], layout };
+      Plotly.newPlot('pathContainer', [nodeTrace, edgeTrace], layout);
+      document.getElementById('pathContainer').style.display = 'block';
+    }
+    
+    function createSankeyDiagram(transactions) {
+      let linkMap = new Map();
+      transactions.forEach(tx => {
+        const fromAddrs = tx.from.split(', ');
+        const toAddrs = tx.to.split(', ');
+        fromAddrs.forEach(f => { 
+          toAddrs.forEach(t => {
+            const key = `${f}->${t}`;
+            linkMap.set(key, (linkMap.get(key) || 0) + 1);
+          });
+        });
+      });
+      const allNodes = Array.from(new Set([...Array.from(linkMap.keys()).flatMap(key => key.split('->'))]));
+      const nodeIndex = new Map(allNodes.map((n, i) => [n, i]));
+      const sankeyLinks = [];
+      linkMap.forEach((val, key) => {
+        const [f, t] = key.split('->');
+        sankeyLinks.push({ source: nodeIndex.get(f), target: nodeIndex.get(t), value: val });
+      });
+      const data = {
+        type: 'sankey',
+        orientation: 'h',
+        node: { pad: 15, thickness: 20, label: allNodes },
+        link: { source: sankeyLinks.map(l => l.source), target: sankeyLinks.map(l => l.target), value: sankeyLinks.map(l => l.value) }
+      };
+      const layout = { margin: { l: 10, r: 10, t: 10, b: 10 }, title: 'Sankey Diagram' };
+      Plotly.newPlot('sankeyContainer', [data], layout);
+    }
+    
+    function updateGraphAppearance() {
+      if (!plotlyGraphObject) return;
+      const nodeColor = document.getElementById('nodeColor').value;
+      const myNodeColor = document.getElementById('myNodeColor').value;
+      const edgeColor = document.getElementById('edgeColor').value;
+      plotlyGraphObject.data[0].marker.color = plotlyGraphObject.data[0].text.map(addr =>
+        addr === currentAddress ? myNodeColor : nodeColor
+      );
+      plotlyGraphObject.data[1].line.color = edgeColor;
+      Plotly.react('pathContainer', plotlyGraphObject.data, plotlyGraphObject.layout);
+    }
+    
+    function togglePathVisualization() {
+      const pathContainer = document.getElementById('pathContainer');
+      pathContainer.style.display = (pathContainer.style.display === 'none' ? 'block' : 'none');
+    }
+    
+    function fetchAddressProfile() {
+      if (!currentAddress) {
+        alert('Please fetch some transactions first.');
+        return;
+      }
+      const panel = document.getElementById('addressProfilePanel');
+      panel.style.display = 'block';
+      const profileInfo = document.getElementById('profileInfo');
+      const riskScore = Math.floor(Math.random() * 100) + 1;
+      const riskLevel = riskScore > 80 ? 'High' : (riskScore > 50 ? 'Medium' : 'Low');
+      profileInfo.innerHTML = `
+        <div><strong>Wallet:</strong> ${currentAddress}</div>
+        <div><strong>Risk Score:</strong> ${riskScore} / 100</div>
+        <div><strong>Risk Level:</strong> ${riskLevel}</div>
+      `;
+    }
+    
+    function generateReport() {
+      if (!currentAddress || currentTransactions.length === 0) {
+        alert('No transaction data for report.');
+        return;
+      }
+      const reportContainer = document.getElementById('reportContainer');
+      const reportOutput = document.getElementById('reportOutput');
+      reportContainer.style.display = 'block';
+      const snippet = currentTransactions.slice(0, 5).map((tx, i) => {
+        return `[${i + 1}] ${tx.time}, From: ${tx.from}, To: ${tx.to}, Amount: ${tx.amount}`;
+      }).join('\n');
+      reportOutput.textContent = `=== Investigation Report ===
+Address: ${currentAddress}
+Currency: ${currentCurrency}
+Transactions (sample):
+${snippet}
+...
+(End)`;
+    }
+    
+    window.generateReceipt = function() {
+      document.getElementById('loading').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('loading').style.display = 'none';
+        const randNum = Math.floor(Math.random() * 1000000);
+        document.getElementById('receipt-number').textContent = 'REC-' + randNum;
+        const val = document.getElementById('donation-amount').value || '0';
+        document.getElementById('receipt-amount').textContent = val;
+        document.getElementById('receipt-date').textContent = new Date().toLocaleDateString();
+        const cryptoSel = document.getElementById('crypto-select');
+        const cText = cryptoSel.value ? cryptoSel.options[cryptoSel.selectedIndex].text : '';
+        document.getElementById('receipt-crypto').textContent = cText;
+        document.getElementById('receipt-address').textContent = document.getElementById('donation-wallet-address').value;
+        document.getElementById('receipt').style.display = 'block';
+        document.getElementById('download-receipt-btn').style.display = 'inline-block';
+      }, 1500);
+    };
+    
+    window.clearSignature = function() {
+      const canvas = document.getElementById('signature-pad');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+    
+    window.downloadPDF = async function() {
+      const receiptEl = document.getElementById('receipt');
+      const canvas = await html2canvas(receiptEl, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'pt', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const ratio = canvas.width / canvas.height;
+      const pdfHeight = pdfWidth / ratio;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('receipt.pdf');
+    };
+    
+    function openInfoModal() {
+      document.getElementById('info-modal').style.display = 'flex';
+      document.getElementById('info-modal').setAttribute('aria-hidden', 'false');
+    }
+    
+    function closeInfoModal() {
+      document.getElementById('info-modal').style.display = 'none';
+      document.getElementById('info-modal').setAttribute('aria-hidden', 'true');
+    }
+    
+    function handleSubmit() {
+      const form = document.getElementById('submission-form');
+      if (form.checkValidity()) {
+        alert('Form submitted successfully!');
+        closeInfoModal();
+        form.reset();
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    }
+  </script>
+</body>
+</html>
